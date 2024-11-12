@@ -9,7 +9,7 @@ public class LetterObjectPool : ObjectPooler<letter>
 
     // private Dictionary<char, Queue<GameObject>> letterPools = new Dictionary<char, Queue<GameObject>>();
 
-    private void Start()
+    private void Awake()
     {
         Initialize();
         // Initialize pool for each letter from A to Z
@@ -44,13 +44,19 @@ public class LetterObjectPool : ObjectPooler<letter>
     protected override void ongetcallback(letter obj)
     {
         base.ongetcallback(obj);
-        obj.onSpawn();
+        // obj.onSpawn();
     }
 
     protected override void onreleasecallback(letter obj)
     {
         base.onreleasecallback(obj);
         obj.ondeSpawn();
+    }
+
+    public letter GetLetter()
+    {
+        return create();
+
     }
 
 

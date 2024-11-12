@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_project/scenes/SplashScreen.unity
     guid: 870ec96eb4f6042f781d80c5d4ca8167
+  - enabled: 1
+    path: Assets/_project/scenes/GamePlayScreen.unity
+    guid: db2875d25da404e44b2f82a51168bba7
   m_configObjects: {}
