@@ -1,25 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ScreenTransition : MonoBehaviour
+namespace LetterQuest
 {
-    [SerializeField] private string SceneToLoad = string.Empty;
-    public void loadscene()
+    public class ScreenTransition : MonoBehaviour
     {
-        if (SceneToLoad == "Exit")
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit()
-#endif
-        }
-        else if (SceneToLoad != string.Empty)
-        {
-            SceneManager.LoadScene(SceneToLoad);
-        }
+        [SerializeField] private string sceneToLoad = string.Empty;
 
+        public void LoadScene()
+        {
+            if (sceneToLoad == "Exit")
+            {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit()
+#endif
+            }
+            else if (sceneToLoad != string.Empty)
+            {
+                SceneManager.LoadScene(sceneToLoad);
+            }
+        }
     }
 }

@@ -1,46 +1,44 @@
+
 using UnityEngine;
 
-public class AudioManager : Singleton<AudioManager>
+namespace LetterQuest
 {
-    [Header("Audio Sources")]
-    [SerializeField] private AudioSource backgroundMusicSource;
-    [SerializeField] private AudioSource sfxSource;
-
-    [Header("Audio Clips")]
-    public AudioClip[] musicClips;  // Background music clips
-    public AudioClip[] sfxClips;    // Sound effect clips
-
-    protected override void Awake()
+    public class AudioManager : Singleton<AudioManager>
     {
-        base.Awake();
-        // Additional initialization if needed
-    }
+        [Header("Audio Sources")] [SerializeField]
+        private AudioSource backgroundMusicSource;
 
-    public void PlayMusic(int clipIndex)
-    {
-        if (clipIndex < 0 || clipIndex >= musicClips.Length) return;
-        backgroundMusicSource.clip = musicClips[clipIndex];
-        backgroundMusicSource.Play();
-    }
+        [SerializeField] private AudioSource sfxSource;
 
-    public void PlaySoundEffect(int clipIndex)
-    {
-        if (clipIndex < 0 || clipIndex >= sfxClips.Length) return;
-        sfxSource.PlayOneShot(sfxClips[clipIndex]);
-    }
+        [Header("Audio Clips")] public AudioClip[] musicClips; // Background music clips
+        public AudioClip[] sfxClips; // Sound effect clips
 
-    public void StopMusic()
-    {
-        backgroundMusicSource.Stop();
-    }
+        public void PlayMusic(int clipIndex)
+        {
+            if (clipIndex < 0 || clipIndex >= musicClips.Length) return;
+            backgroundMusicSource.clip = musicClips[clipIndex];
+            backgroundMusicSource.Play();
+        }
 
-    public void SetMusicVolume(float volume)
-    {
-        backgroundMusicSource.volume = Mathf.Clamp01(volume);
-    }
+        public void PlaySoundEffect(int clipIndex)
+        {
+            if (clipIndex < 0 || clipIndex >= sfxClips.Length) return;
+            sfxSource.PlayOneShot(sfxClips[clipIndex]);
+        }
 
-    public void SetSFXVolume(float volume)
-    {
-        sfxSource.volume = Mathf.Clamp01(volume);
+        public void StopMusic()
+        {
+            backgroundMusicSource.Stop();
+        }
+
+        public void SetMusicVolume(float volume)
+        {
+            backgroundMusicSource.volume = Mathf.Clamp01(volume);
+        }
+
+        public void SetSfxVolume(float volume)
+        {
+            sfxSource.volume = Mathf.Clamp01(volume);
+        }
     }
 }

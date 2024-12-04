@@ -1,20 +1,22 @@
-using JetBrains.Annotations;
+
 using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
 
-
-public class letter : MonoBehaviour
+namespace LetterQuest
 {
-    private TMP_Text LetterText;
-    public void onSpawn(string text)
+    public class Letter : MonoBehaviour
     {
-        LetterText = GetComponentInChildren<TMP_Text>();
-        LetterText.text = text;
-    }
+        private TMP_Text _letterText;
 
-    public void ondeSpawn()
-    {
+        public void OnSpawn(string text)
+        {
+            _letterText = GetComponentInChildren<TMP_Text>();
+            _letterText.text = text;
+        }
 
+        public void OnDespawn()
+        {
+            _letterText.text = string.Empty;
+        }
     }
 }

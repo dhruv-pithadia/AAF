@@ -1,72 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.Pool;
 
-namespace LetterQuest.common
+using UnityEngine;
+
+namespace LetterQuest
 {
     public abstract class ObjectPooler<T> : MonoBehaviour where T : MonoBehaviour
     {
         [SerializeField] private T prefab;
-        [SerializeField] protected int MaxSize;
-        [SerializeField] protected int InitialSize;
-        [SerializeField] protected bool CollectionCheck;
+        [SerializeField] protected int maxSize;
+        [SerializeField] protected int initialSize;
+        [SerializeField] protected bool collectionCheck;
+        protected UnityEngine.Pool.ObjectPool<T> ObjectPool;
 
-        UnityEngine.Pool.ObjectPool<T> ObjectPool;
 
         protected void Initialize()
         {
-            ObjectPool = new UnityEngine.Pool.ObjectPool<T>(create, ongetcallback, onreleasecallback, ondestroycallback, CollectionCheck, InitialSize, MaxSize);
-
+            ObjectPool = new UnityEngine.Pool.ObjectPool<T>(Create, OnGetCallback, OnReleaseCallback,
+                OnDestroyCallback, collectionCheck, initialSize, maxSize);
         }
 
-        protected void Initialize(int MaxSize, int InitialSize, bool CollectionCheck)
-        {
-            this.MaxSize = MaxSize;
-            this.InitialSize = InitialSize;
-            this.CollectionCheck = CollectionCheck;
-            ObjectPool = new UnityEngine.Pool.ObjectPool<T>(create, ongetcallback, onreleasecallback, ondestroycallback, CollectionCheck, InitialSize, MaxSize);
-
-        }
-
-        protected virtual T create()
+        private T Create()
         {
             return Instantiate(prefab, Vector3.zero, Quaternion.identity);
         }
 
-        protected virtual void ongetcallback(T obj)
+        protected virtual void OnGetCallback(T obj)
         {
             obj.gameObject.SetActive(true);
         }
 
-        protected virtual void onreleasecallback(T obj)
+        protected virtual void OnReleaseCallback(T obj)
         {
             obj.gameObject.SetActive(false);
         }
 
-        private static void ondestroycallback(T obj)
+        private static void OnDestroyCallback(T obj)
         {
-            if (obj == null) return;
+            if (ReferenceEquals(obj, null)) return;
             Destroy(obj.gameObject);
         }
 
-        public void release(T obj)
+        protected void Dispose()
         {
-            ObjectPool.Release(obj);
-        }
-
-        protected void dispose()
-        {
-            if (ObjectPool == null) return;
+            if (ReferenceEquals(ObjectPool, null)) return;
             ObjectPool.Dispose();
             ObjectPool = null;
         }
-
-
-
     }
-
-
-
 }

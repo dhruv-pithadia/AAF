@@ -1,21 +1,28 @@
-using System.Collections.Generic;
+
 using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.Serialization;
 
-public class LetterManager : MonoBehaviour
+namespace LetterQuest
 {
-    [SerializeField] private LetterObjectPool LetterObjectPool;
-    private List<letter> LetterList;
-    [SerializeField] private int MaxLetters = 26;
-    [SerializeField] private List<Transform> LetterPositions = new List<Transform>();
-
-    private void Start()
+    public class LetterManager : MonoBehaviour
     {
-        for (int i = 0; i < MaxLetters; i++)
-        {
-            var letter = LetterObjectPool.GetLetter();
-            letter.transform.position = LetterPositions[i].position;
-            letter.onSpawn("B");
+        [SerializeField] private LetterObjectPool letterObjectPool;
 
+        [FormerlySerializedAs("LetterPositions")]
+        [SerializeField] private List<Transform> letterPositions = new();
+
+        [SerializeField] private int maxLetters = 26;
+        private List<Letter> _letterList;
+
+        private void Start()
+        {
+            for (int i = 0; i < letterPositions.Count; i++)
+            {
+                var letter = letterObjectPool.GetLetter();
+                letter.transform.position = letterPositions[i].position;
+                letter.OnSpawn("B");
+            }
         }
     }
 }

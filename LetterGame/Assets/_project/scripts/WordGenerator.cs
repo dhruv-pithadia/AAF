@@ -1,37 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEngine;
+
 using System.IO;
+using UnityEngine;
 
-public class WordGenerator : MonoBehaviour
+namespace LetterQuest
 {
-    private string[] difficulties = new string[] { "easy", "medium", "hard" };
-    private string[] CurrentWords;
-    private TextSerializer serializer;
-    private int CurrentDifficulty = 0;
-    private string file_extension = ".txt";
-
-    private void Start()
+    public class WordGenerator : MonoBehaviour
     {
-        serializer = GetComponent<TextSerializer>();
-        string file_path = Path.Combine(Application.persistentDataPath, difficulties[CurrentDifficulty] + file_extension);
-        CurrentWords = serializer.LoadTextFile(file_path);
-        Shuffle(CurrentWords);
-        foreach (string line in CurrentWords)
+        private const string FileExtension = ".txt";
+        private readonly string[] _difficulties = { "easy", "medium", "hard" };
+        private string[] _currentWords;
+        private TextSerializer _serializer;
+        private int _currentDifficulty = 0;
+
+        private void Start()
         {
-            Debug.Log(line);
+            _serializer = GetComponent<TextSerializer>();
+            string filePath = Path.Combine(Application.persistentDataPath,
+                _difficulties[_currentDifficulty] + FileExtension);
+            _currentWords = _serializer.LoadTextFile(filePath);
+            Shuffle(_currentWords);
+            foreach (var line in _currentWords)
+            {
+                Debug.Log(line);
+            }
         }
-    }
 
-    private void Shuffle(string[] text)
-    {
-        for (int i = 0; i < text.Length; i++)
+        private void Shuffle(string[] text)
         {
-            string tempword = text[i];
-            int index = Random.Range(i, text.Length);
-            text[i] = text[index];
-            text[index] = tempword;
+            for (var i = 0; i < text.Length; i++)
+            {
+                string tmpWord = text[i];
+                int index = Random.Range(i, text.Length);
+                text[i] = text[index];
+                text[index] = tmpWord;
+            }
         }
     }
 }
