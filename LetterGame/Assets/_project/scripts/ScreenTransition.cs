@@ -15,7 +15,7 @@ namespace LetterQuest
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
 #else
-                Application.Quit()
+                Application.Quit();
 #endif
             }
             else if (sceneToLoad != string.Empty)
