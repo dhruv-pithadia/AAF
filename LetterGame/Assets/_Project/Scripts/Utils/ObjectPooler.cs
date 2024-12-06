@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-namespace LetterQuest
+namespace LetterQuest.Utils
 {
     public abstract class ObjectPooler<T> : MonoBehaviour where T : MonoBehaviour
     {
@@ -10,7 +10,7 @@ namespace LetterQuest
         [SerializeField] protected int initialSize;
         [SerializeField] protected bool collectionCheck;
         protected UnityEngine.Pool.ObjectPool<T> ObjectPool;
-        
+
         protected void Initialize()
         {
             Debug.Log("[ObjectPooler]: Initialize");

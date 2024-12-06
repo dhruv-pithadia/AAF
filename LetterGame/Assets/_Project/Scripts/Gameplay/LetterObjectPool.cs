@@ -1,5 +1,7 @@
 
-namespace LetterQuest
+using LetterQuest.Utils;
+
+namespace LetterQuest.Gameplay
 {
     public class LetterObjectPool : ObjectPooler<Letter>
     {

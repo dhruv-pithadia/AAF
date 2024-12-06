@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace LetterQuest
+namespace LetterQuest.Gameplay
 {
     public class LetterManager : MonoBehaviour
     {
@@ -11,13 +11,15 @@ namespace LetterQuest
         [SerializeField] private int maxLetters = 26;
         private readonly List<Letter> _letterList = new();
 
+        #region Unity Methods
+
         private void Start()
         {
-            int ascii = 65;
-            for (int i = 0; i < maxLetters; i++)
+            int ascii = 65; //  65 = A | 90 = Z
+            for (var i = 0; i < maxLetters; i++)
             {
                 var letter = letterObjectPool.GetLetter();
-                letter.OnSpawn(letterPositions[i].position, ascii); //  65 = A | 90 = Z
+                letter.OnSpawn(letterPositions[i].position, ascii);
                 _letterList.Add(letter);
                 ascii++;
             }
@@ -29,5 +31,7 @@ namespace LetterQuest
             if (_letterList.Count <= 0) return;
             _letterList.Clear();
         }
+
+        #endregion
     }
 }

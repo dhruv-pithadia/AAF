@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-namespace LetterQuest
+namespace LetterQuest.Utils
 {
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {

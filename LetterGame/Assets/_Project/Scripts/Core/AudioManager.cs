@@ -1,7 +1,8 @@
 
 using UnityEngine;
+using LetterQuest.Utils;
 
-namespace LetterQuest
+namespace LetterQuest.Core
 {
     public class AudioManager : Singleton<AudioManager>
     {

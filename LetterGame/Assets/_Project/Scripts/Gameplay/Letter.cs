@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace LetterQuest
+namespace LetterQuest.Gameplay
 {
     public class Letter : MonoBehaviour
     {
