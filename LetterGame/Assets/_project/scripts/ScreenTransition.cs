@@ -22,6 +22,10 @@ namespace LetterQuest
             {
                 SceneManager.LoadScene(sceneToLoad);
             }
+            else
+            {
+                Debug.LogError("[SceneTransition]: scene to load is null or empty");
+            }
         }
     }
 }

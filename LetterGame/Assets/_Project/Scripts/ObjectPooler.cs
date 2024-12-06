@@ -10,38 +10,29 @@ namespace LetterQuest
         [SerializeField] protected int initialSize;
         [SerializeField] protected bool collectionCheck;
         protected UnityEngine.Pool.ObjectPool<T> ObjectPool;
-
-
+        
         protected void Initialize()
         {
+            Debug.Log("[ObjectPooler]: Initialize");
             ObjectPool = new UnityEngine.Pool.ObjectPool<T>(Create, OnGetCallback, OnReleaseCallback,
                 OnDestroyCallback, collectionCheck, initialSize, maxSize);
         }
 
-        private T Create()
-        {
-            return Instantiate(prefab, Vector3.zero, Quaternion.identity);
-        }
-
-        protected virtual void OnGetCallback(T obj)
-        {
-            obj.gameObject.SetActive(true);
-        }
-
-        protected virtual void OnReleaseCallback(T obj)
-        {
-            obj.gameObject.SetActive(false);
-        }
+        private T Create() => Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        private static void OnGetCallback(T obj) => obj.gameObject.SetActive(true);
+        private static void OnReleaseCallback(T obj) => obj.gameObject.SetActive(false);
 
         private static void OnDestroyCallback(T obj)
         {
             if (ReferenceEquals(obj, null)) return;
+            Debug.Log("[ObjectPooler]: On Destroy Callback");
             Destroy(obj.gameObject);
         }
 
         protected void Dispose()
         {
             if (ReferenceEquals(ObjectPool, null)) return;
+            Debug.Log("[ObjectPooler]: Dispose");
             ObjectPool.Dispose();
             ObjectPool = null;
         }

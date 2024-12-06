@@ -11,26 +11,26 @@ namespace LetterQuest
         {
             get
             {
-                if (_instance != null) return _instance;
+                if (ReferenceEquals(_instance, null) == false) return _instance;
 
                 _instance = FindObjectOfType<T>();
-                if (_instance != null) return _instance;
+                if (ReferenceEquals(_instance, null) == false) return _instance;
 
-                var singletonObj = new GameObject(typeof(T).Name);
-                _instance = singletonObj.AddComponent<T>();
-                DontDestroyOnLoad(singletonObj);
+                var instance = new GameObject(typeof(T).Name);
+                _instance = instance.AddComponent<T>();
+                DontDestroyOnLoad(instance);
                 return _instance;
             }
         }
 
         protected virtual void Awake()
         {
-            if (_instance == null)
+            if (ReferenceEquals(_instance, null))
             {
                 _instance = this as T;
                 DontDestroyOnLoad(gameObject);
             }
-            else if (_instance != this)
+            else if (ReferenceEquals(_instance, null) == false)
             {
                 Destroy(gameObject);
             }

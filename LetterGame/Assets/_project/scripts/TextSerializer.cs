@@ -9,6 +9,7 @@ namespace LetterQuest
     {
         public void CreateTextFile(string path)
         {
+            Debug.Log("[TextSerializer]: Create Text File");
             if (File.Exists(path)) return;
             Debug.Log("Text File is being created");
             string content = "Hello\nWorld\nTable\nCoffee\nMovies\nBooks\nAnimals\nDolphin";
@@ -18,6 +19,7 @@ namespace LetterQuest
 
         public string[] LoadTextFile(string path)
         {
+            Debug.Log("[TextSerializer]: Load Text File");
             if (!File.Exists(path)) return Array.Empty<string>();
 
             Debug.Log("Text File is being loaded");
