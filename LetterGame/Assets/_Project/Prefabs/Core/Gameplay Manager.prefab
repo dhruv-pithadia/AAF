@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2848307e3628a4fc58f13d0f9784a2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  letterObjectPool: {fileID: 1691354078283606393}
+  letterObjPool: {fileID: 1691354078283606393}
   letterPositions:
   - {fileID: 3894172934834411488}
   - {fileID: 3362605370202102822}
@@ -133,7 +133,6 @@ MonoBehaviour:
   - {fileID: 3230087856419069401}
   - {fileID: 4149886025238388260}
   - {fileID: 6683319564931927601}
-  maxLetters: 26
 --- !u!114 &1691354078283606393
 MonoBehaviour:
   m_ObjectHideFlags: 0

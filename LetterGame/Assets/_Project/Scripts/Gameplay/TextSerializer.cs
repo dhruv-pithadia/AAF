@@ -29,7 +29,7 @@ namespace LetterQuest.Gameplay
         #endregion
 
         #region Private Methods
-        
+
         private void CreateTextFile(int difficulty)
         {
             string filePath = CreateFilePath(difficulty);
@@ -37,13 +37,13 @@ namespace LetterQuest.Gameplay
 
             File.AppendAllText(filePath, GetWordsOfDifficulty(difficulty));
         }
-        
+
         private string CreateFilePath(int difficulty)
         {
             difficulty = Mathf.Clamp(difficulty, 0, 2);
             return Path.Combine(Application.persistentDataPath, _difficulties[difficulty] + FileExtension);
         }
-        
+
         private string[] ReadAndSplitTextFile(string filePath)
         {
             var reader = new StreamReader(filePath);
@@ -52,7 +52,7 @@ namespace LetterQuest.Gameplay
             reader.Close();
             return lines;
         }
-        
+
         private string GetWordsOfDifficulty(int difficulty)
         {
             var results = _difficulties[difficulty] switch

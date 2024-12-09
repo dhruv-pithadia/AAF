@@ -1,6 +1,4 @@
 
-using Random = UnityEngine.Random;
-
 namespace LetterQuest.Gameplay
 {
     public class WordGenerator
@@ -40,7 +38,7 @@ namespace LetterQuest.Gameplay
             for (var i = 0; i < text.Length; i++)
             {
                 var tmpWord = text[i];
-                var index = Random.Range(i, text.Length);
+                var index = UnityEngine.Random.Range(i, text.Length);
                 text[i] = text[index];
                 text[index] = tmpWord;
             }
