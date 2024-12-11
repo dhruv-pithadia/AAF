@@ -7,6 +7,7 @@ namespace LetterQuest.Gameplay
 {
     public class Letter : MonoBehaviour, IPointerDownHandler, IPointerMoveHandler, IPointerUpHandler
     {
+        [SerializeField] private MeshRenderer meshRenderer;
         public bool IsDragging { get; private set; }
         private Transform _letterTransform;
         private TMP_Text _letterText;
@@ -50,7 +51,11 @@ namespace LetterQuest.Gameplay
         private void AssignLetterText(string text) => _letterText.text = text;
         private void MoveLetter(Vector3 position) => _letterTransform.position = position;
 
-        private void BeginLetterDrag() => IsDragging = true;
+        private void BeginLetterDrag()
+        { 
+            IsDragging = true;
+            meshRenderer.enabled = false;
+        }
 
         private void LetterDragMovement(Vector3 mousePosition)
         {
@@ -63,6 +68,7 @@ namespace LetterQuest.Gameplay
         private void FinishLetterDrag()
         {
             IsDragging = false;
+            meshRenderer.enabled = true;
             _letterTransform.position = _originalPosition;
             //  TODO: if over word slot, place letter in slot
         }

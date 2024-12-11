@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace LetterQuest.Gameplay
 {
-    public class WordSlotManager : MonoBehaviour
+    public class WordManager : MonoBehaviour
     {
         [SerializeField] private TMP_Text currentWord;
         private WordGenerator _wordGenerator;
