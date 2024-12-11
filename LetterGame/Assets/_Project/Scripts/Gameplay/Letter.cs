@@ -2,22 +2,26 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 namespace LetterQuest.Gameplay
 {
-    public class Letter : MonoBehaviour, IPointerDownHandler, IPointerMoveHandler, IPointerUpHandler
+    public class Letter : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerMoveHandler
     {
         [SerializeField] private MeshRenderer meshRenderer;
         public bool IsDragging { get; private set; }
         private Transform _letterTransform;
+        private Vector3 _originalPosition;
+        private EventSystem _eventSystem;
         private TMP_Text _letterText;
         private Camera _camera;
-        private Vector3 _originalPosition;
+        private int _asciiCode;
 
         private void Awake()
         {
             _camera = Camera.main;
             _letterTransform = transform;
+            _eventSystem = EventSystem.current;
             _letterText = GetComponentInChildren<TMP_Text>();
         }
 
@@ -25,8 +29,9 @@ namespace LetterQuest.Gameplay
 
         public void OnSpawn(Vector3 position, int ascii)
         {
+            _asciiCode = ascii;
             _originalPosition = position;
-            AssignLetterText(((char)ascii).ToString());
+            AssignLetterText(ConvertAsciiToString());
             MoveLetter(_originalPosition);
         }
 
@@ -35,24 +40,25 @@ namespace LetterQuest.Gameplay
             MoveLetter(Vector3.zero);
             AssignLetterText(string.Empty);
         }
-        
+
         #endregion
 
         #region Interface Methods
 
         public void OnPointerDown(PointerEventData eventData) => BeginLetterDrag();
         public void OnPointerMove(PointerEventData eventData) => LetterDragMovement(eventData.position);
-        public void OnPointerUp(PointerEventData eventData) => FinishLetterDrag();
+        public void OnPointerUp(PointerEventData eventData) => FinishLetterDrag(eventData);
 
         #endregion
 
         #region Private Methods
 
+        private string ConvertAsciiToString() => ((char)_asciiCode).ToString();
         private void AssignLetterText(string text) => _letterText.text = text;
         private void MoveLetter(Vector3 position) => _letterTransform.position = position;
 
         private void BeginLetterDrag()
-        { 
+        {
             IsDragging = true;
             meshRenderer.enabled = false;
         }
@@ -65,12 +71,24 @@ namespace LetterQuest.Gameplay
             MoveLetter(mousePosition);
         }
 
-        private void FinishLetterDrag()
+        private void FinishLetterDrag(PointerEventData eventData)
         {
             IsDragging = false;
             meshRenderer.enabled = true;
             _letterTransform.position = _originalPosition;
-            //  TODO: if over word slot, place letter in slot
+            AssignLetterToUiSlot(eventData);
+        }
+
+        private void AssignLetterToUiSlot(PointerEventData eventData)
+        {
+            var raycastResults = new List<RaycastResult>();
+            _eventSystem.RaycastAll(eventData, raycastResults);
+
+            for (var i = 0; i < raycastResults.Count; i++)
+            {
+                if (raycastResults[i].gameObject.layer != LayerMask.NameToLayer("LetterSlot")) continue;
+                raycastResults[i].gameObject.GetComponent<LetterSlot>().SetLetterSlotText(ConvertAsciiToString());
+            }
         }
 
         #endregion

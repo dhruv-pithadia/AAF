@@ -29,7 +29,16 @@ namespace LetterQuest.Gameplay
 
         #region Public Methods
 
-        public void AssignNextWord()
+        public void SkipWord()
+        {
+            AssignNextWord();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void AssignNextWord()
         {
             currentWord.text = _wordGenerator.GetNextWord();
             if (currentWord.text == string.Empty)
