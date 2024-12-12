@@ -14,7 +14,6 @@ namespace LetterQuest.Utils
 
         protected void Initialize()
         {
-            Debug.Log("[ObjectPooler]: Initialize");
             ObjectPool = new UnityEngine.Pool.ObjectPool<T>(Create, OnGetCallback, OnReleaseCallback,
                 OnDestroyCallback, collectionCheck, initialSize, maxSize);
         }
@@ -33,7 +32,6 @@ namespace LetterQuest.Utils
         protected void Dispose()
         {
             if (ReferenceEquals(ObjectPool, null)) return;
-            Debug.Log("[ObjectPooler]: Dispose");
             ObjectPool.Dispose();
             ObjectPool = null;
         }

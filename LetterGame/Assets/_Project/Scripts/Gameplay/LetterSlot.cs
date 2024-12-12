@@ -21,11 +21,8 @@ namespace LetterQuest.Gameplay
             LetterSlotUpdateEvent?.Invoke();
         }
 
-        public void ResetLetterSlotText()
-        {
-            _textMesh.text = string.Empty;
-        }
-
-        public bool IsAssigned() => _textMesh.text != string.Empty;
+        public char GetLetter() => _textMesh.text[^1];
+        public bool IsAssigned => _textMesh.text != string.Empty;
+        public void ResetLetterSlotText() => _textMesh.text = string.Empty;
     }
 }

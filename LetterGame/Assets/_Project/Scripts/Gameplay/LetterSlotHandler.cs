@@ -3,46 +3,98 @@ using UnityEngine;
 
 namespace LetterQuest.Gameplay
 {
-    public class LetterSlotHandler : MonoBehaviour
+    [System.Serializable]
+    public class LetterSlotHandler
     {
         [SerializeField] private LetterSlot[] letterSlots;
+        public delegate void WordComplete();
+        public event WordComplete WordCompleteEvent;
+        private char[] _wordToSpell;
 
-        private void Start()
+        #region Public Methods
+
+        public void Initialize()
         {
-            for (int i = 0; i < letterSlots.Length; i++)
+            for (var i = 0; i < letterSlots.Length; i++)
             {
                 letterSlots[i].LetterSlotUpdateEvent += OnLetterSlotUpdate;
             }
         }
 
-        private void OnDestroy()
+        public void Dispose()
         {
-            for (int i = 0; i < letterSlots.Length; i++)
+            for (var i = 0; i < letterSlots.Length; i++)
             {
                 letterSlots[i].LetterSlotUpdateEvent -= OnLetterSlotUpdate;
             }
         }
 
-        private void OnLetterSlotUpdate()
+        public void OnWordUpdate(string word)
         {
-            //  TODO: instead of slot length use current word length
-            for (int i = 0; i < letterSlots.Length; i++)
-            {
-                if (letterSlots[i].IsAssigned() == false) return;
-            }
-
-            //  TODO: all letters are assigned if here, check that letters match
-
-            //  TODO: if all letters match current word, proceed to next word
+            TurnOffAllSlots();
+            ConvertAndAssignWord(word);
+            TurnOnSlots(_wordToSpell.Length);
         }
 
         public void ResetAllSlots()
         {
-            for (int i = 0; i < letterSlots.Length; i++)
+            for (var i = 0; i < letterSlots.Length; i++)
             {
-                if (letterSlots[i].IsAssigned() == false) continue;
+                if (letterSlots[i].IsAssigned == false) continue;
                 letterSlots[i].ResetLetterSlotText();
             }
         }
+
+        #endregion
+
+        #region Private Methods
+
+        private void OnLetterSlotUpdate()
+        {
+            if (CheckWordSpelling())
+            {
+                WordCompleteEvent?.Invoke();
+            }
+        }
+
+        private void TurnOffAllSlots()
+        {
+            for (var i = 0; i < letterSlots.Length; i++)
+            {
+                letterSlots[i].gameObject.SetActive(false);
+            }
+        }
+
+        private void TurnOnSlots(int count)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                letterSlots[i].gameObject.SetActive(true);
+            }
+        }
+
+        private void ConvertAndAssignWord(string word)
+        {
+            _wordToSpell = word.ToCharArray();
+
+            for (var i = 0; i < _wordToSpell.Length; i++)
+            {
+                if (char.GetNumericValue(_wordToSpell[i]) >= 65) continue;
+                _wordToSpell[i] = char.ToUpper(_wordToSpell[i]);
+            }
+        }
+
+        private bool CheckWordSpelling()
+        {
+            for (var i = 0; i < _wordToSpell.Length; i++)
+            {
+                if (letterSlots[i].IsAssigned == false) return false;
+                if (_wordToSpell[i] != letterSlots[i].GetLetter()) return false;
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 }

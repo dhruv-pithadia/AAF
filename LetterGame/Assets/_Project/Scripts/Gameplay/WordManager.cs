@@ -4,22 +4,28 @@ using UnityEngine;
 
 namespace LetterQuest.Gameplay
 {
+    [System.Serializable]
     public class WordManager : MonoBehaviour
     {
         [SerializeField] private TMP_Text currentWord;
+        [field: SerializeField] private LetterSlotHandler letterSlotHandler;
         private WordGenerator _wordGenerator;
 
         #region Unity Methods
 
-        private void Start()
+        public void Start()
         {
+            letterSlotHandler.Initialize();
+            letterSlotHandler.WordCompleteEvent += OnWordComplete;
             _wordGenerator = new WordGenerator();
             _wordGenerator.SetWordDifficulty(0);
             AssignNextWord();
         }
 
-        private void OnDestroy()
+        public void OnDisable()
         {
+            letterSlotHandler.Dispose();
+            letterSlotHandler.WordCompleteEvent -= OnWordComplete;
             if (ReferenceEquals(_wordGenerator, null)) return;
             _wordGenerator.Dispose();
             _wordGenerator = null;
@@ -31,12 +37,18 @@ namespace LetterQuest.Gameplay
 
         public void SkipWord()
         {
-            AssignNextWord();
+            OnWordComplete();
         }
 
         #endregion
 
         #region Private Methods
+
+        private void OnWordComplete()
+        {
+            letterSlotHandler.ResetAllSlots();
+            AssignNextWord();
+        }
 
         private void AssignNextWord()
         {
@@ -44,6 +56,10 @@ namespace LetterQuest.Gameplay
             if (currentWord.text == string.Empty)
             {
                 Debug.LogError("[WordSlotManager]: No word found");
+            }
+            else
+            {
+                letterSlotHandler.OnWordUpdate(currentWord.text);
             }
         }
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace LetterQuest.Gameplay
 {
-    public class Letter : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerMoveHandler
+    public class LetterBlock : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerMoveHandler
     {
         [SerializeField] private MeshRenderer meshRenderer;
         public bool IsDragging { get; private set; }

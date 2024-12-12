@@ -9,7 +9,7 @@ namespace LetterQuest.Gameplay
         private const int MaxLetters = 26;
         [SerializeField] private LetterObjectPool letterObjPool;
         [SerializeField] private List<Transform> letterPositions = new();
-        private readonly List<Letter> _letterList = new();
+        private readonly List<LetterBlock> _letterList = new();
 
         #region Unity Methods
 
@@ -27,14 +27,14 @@ namespace LetterQuest.Gameplay
 
         private void LateUpdate()
         {
-            for (int i = 0; i < _letterList.Count; i++)
+            for (var i = 0; i < _letterList.Count; i++)
             {
                 if (_letterList[i].IsDragging == false) continue;
                 //  TODO: do drag movement here
             }
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             _letterList?.Clear();
         }
