@@ -55,11 +55,24 @@ namespace LetterQuest.Gameplay
             currentWord.text = _wordGenerator.GetNextWord();
             if (currentWord.text == string.Empty)
             {
-                Debug.LogError("[WordSlotManager]: No word found");
+                IncreaseDifficulty();
             }
             else
             {
                 letterSlotHandler.OnWordUpdate(currentWord.text);
+            }
+        }
+
+        private void IncreaseDifficulty()
+        {
+            if (_wordGenerator.GoToNextDifficulty())
+            {
+                AssignNextWord();
+            }
+            else
+            {
+                //  TODO: End Game
+                Debug.Log("[WordManager]: The Game Is Done");
             }
         }
 
