@@ -107,6 +107,7 @@ MonoBehaviour:
   - {fileID: 3230087856419069401}
   - {fileID: 4149886025238388260}
   - {fileID: 6683319564931927601}
+  inputDetection: {fileID: 11400000, guid: 95bab0164cd54b941bfd09cb929e92a7, type: 2}
 --- !u!114 &1691354078283606393
 MonoBehaviour:
   m_ObjectHideFlags: 0

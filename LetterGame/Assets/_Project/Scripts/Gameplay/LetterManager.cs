@@ -7,6 +7,7 @@ namespace LetterQuest.Gameplay
     public class LetterManager : MonoBehaviour
     {
         private const int MaxLetters = 26;
+        [SerializeField] private InputDetection inputDetection;
         [SerializeField] private LetterObjectPool letterObjPool;
         [SerializeField] private List<Transform> letterPositions = new();
         private readonly List<LetterBlock> _letterList = new();
@@ -15,6 +16,8 @@ namespace LetterQuest.Gameplay
 
         private void Start()
         {
+            inputDetection.Initialize(Camera.main);
+
             int ascii = 65; //  65 = A | 90 = Z
             for (var i = 0; i < MaxLetters; i++)
             {
@@ -30,12 +33,13 @@ namespace LetterQuest.Gameplay
             for (var i = 0; i < _letterList.Count; i++)
             {
                 if (_letterList[i].IsDragging == false) continue;
-                //  TODO: do drag movement here
+                _letterList[i].MoveLetter(inputDetection.GetMouseWorldPosition());
             }
         }
 
         private void OnDisable()
         {
+            inputDetection.Dispose();
             _letterList?.Clear();
         }
 
