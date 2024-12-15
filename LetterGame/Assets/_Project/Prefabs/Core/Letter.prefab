@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8054677725272172609}
   - component: {fileID: 6767224799148184931}
   - component: {fileID: 7841679634292803759}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Letter
   m_TagString: Letter
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -10, y: 1.5, z: 5}
-  m_LocalScale: {x: 2, y: 2, z: 0.1}
+  m_LocalScale: {x: 1.6, y: 1.6, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6356636856604823891}
@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshRenderer: {fileID: 6767224799148184931}
+  canvas: {fileID: 3199424465202642366}
 --- !u!33 &8054677725272172609
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -179,8 +180,8 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: -628227901
-  m_SortingOrder: 0
+  m_SortingLayerID: -663003151
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &7796215738956624052
 MonoBehaviour:
@@ -248,7 +249,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2385021900558437455}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.055}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -287,7 +288,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: B
+  m_text: W
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}

@@ -89,7 +89,14 @@ namespace LetterQuest.Gameplay
             for (var i = 0; i < _wordToSpell.Length; i++)
             {
                 if (letterSlots[i].IsAssigned == false) return false;
-                if (_wordToSpell[i] != letterSlots[i].GetLetter()) return false;
+                
+                if (_wordToSpell[i] != letterSlots[i].GetLetter())
+                {
+                    letterSlots[i].AssignSlotBorderColor(Color.red);
+                    return false;
+                }
+
+                letterSlots[i].AssignSlotBorderColor(Color.green);
             }
 
             return true;

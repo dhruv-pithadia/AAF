@@ -8,6 +8,7 @@ namespace LetterQuest.Gameplay
     public class LetterBlock : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         [SerializeField] private MeshRenderer meshRenderer;
+        [SerializeField] private Canvas canvas;
         public bool IsDragging { get; private set; }
         private Transform _letterTransform;
         private TMP_Text _letterText;
@@ -19,6 +20,7 @@ namespace LetterQuest.Gameplay
         private void Awake()
         {
             _letterTransform = transform;
+            canvas.worldCamera = Camera.main;
             _letterText = GetComponentInChildren<TMP_Text>();
         }
 
