@@ -32,6 +32,7 @@ LetterGame/[Aa]ssets/Plugins/Editor/JetBrains*
 
 # Jet Brains Rider
 .idea/
+LetterGame/.idea/
 
 # Gradle cache directory
 .gradle/
