@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 namespace LetterQuest.Gameplay
 {
@@ -34,14 +35,26 @@ namespace LetterQuest.Gameplay
         {
             _asciiCode = ascii;
             _originalPos = position;
-            AssignLetterText(ConvertAsciiToString());
             MoveLetter(_originalPos);
+            AssignLetterText(ConvertAsciiToString());
         }
 
         public void OnDespawn()
         {
-            MoveLetter(Vector3.zero);
             AssignLetterText(string.Empty);
+            _letterTransform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+        }
+
+        public void OnDragStart()
+        {
+            meshRenderer.enabled = false;
+        }
+
+        public void OnDragEnd(Vector3 position)
+        {
+            meshRenderer.enabled = true;
+            AssignLetterToUiSlot(InputDetection.GetHandOverUi(position));
+            _letterTransform.SetPositionAndRotation(_originalPos, Quaternion.identity);
         }
 
         #endregion
@@ -61,7 +74,7 @@ namespace LetterQuest.Gameplay
         private void BeginLetterDrag()
         {
             IsDragging = true;
-            meshRenderer.enabled = false;
+            OnDragStart();
         }
 
         private void FinishLetterDrag(PointerEventData eventData)
@@ -69,17 +82,20 @@ namespace LetterQuest.Gameplay
             IsDragging = false;
             meshRenderer.enabled = true;
             AssignLetterToUiSlot(eventData);
-            MoveLetter(_originalPos);
+            _letterTransform.SetPositionAndRotation(_originalPos, Quaternion.identity);
         }
 
         private void AssignLetterToUiSlot(PointerEventData eventData)
         {
-            var raycastData = InputDetection.GetUiRaycastData(eventData);
+            AssignLetterToUiSlot(InputDetection.GetUiRaycastData(eventData));
+        }
 
-            for (var i = 0; i < raycastData.Count; i++)
+        private void AssignLetterToUiSlot(List<RaycastResult> results)
+        {
+            for (var i = 0; i < results.Count; i++)
             {
-                if (raycastData[i].gameObject.layer != LayerMask.NameToLayer("LetterSlot")) continue;
-                raycastData[i].gameObject.GetComponent<LetterSlot>().SetLetterSlotText(ConvertAsciiToString());
+                if (results[i].gameObject.layer != LayerMask.NameToLayer("LetterSlot")) continue;
+                results[i].gameObject.GetComponent<LetterSlot>().SetLetterSlotText(ConvertAsciiToString());
             }
         }
 

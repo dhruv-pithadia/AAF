@@ -50,6 +50,16 @@ namespace LetterQuest
             return results;
         }
 
+        public static List<RaycastResult> GetHandOverUi(Vector3 position)
+        {
+            Vector3 screenPoint = Camera.main.WorldToScreenPoint(position);
+            var eventData = new PointerEventData(EventSystem.current)
+            {
+                position = screenPoint
+            };
+            return GetUiRaycastData(eventData);
+        }
+
         #endregion
 
         #region Event Callbacks

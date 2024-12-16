@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   editTimePose: 2
   _interactionVolumeVisualization: 1
-  FOV_Visualization: 1
+  FOV_Visualization: 0
   OptimalFOV_Visualization: 1
   MaxFOV_Visualization: 1
   _frameOptimization: 0
