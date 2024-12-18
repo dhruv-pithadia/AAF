@@ -33,7 +33,7 @@ namespace LetterQuest.Gameplay
             for (var i = 0; i < _letterList.Count; i++)
             {
                 if (_letterList[i].IsDragging == false) continue;
-                _letterList[i].MoveLetter(inputDetection.GetMouseWorldPosition());
+                _letterList[i].MoveLetter(InputDetection.GetMouseWorldPosition());
             }
         }
 

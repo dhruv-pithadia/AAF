@@ -10,22 +10,34 @@ namespace LetterQuest.Core
 
         public void LoadScene()
         {
+            if (IsInvoking()) return;
+
             if (sceneToLoad == "Exit")
             {
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#else
-                Application.Quit();
-#endif
+                Invoke(nameof(Quit), 1f);
             }
             else if (sceneToLoad != string.Empty)
             {
-                SceneManager.LoadScene(sceneToLoad);
+                Invoke(nameof(Load), 0.5f);
             }
             else
             {
                 Debug.LogError("[SceneTransition]: scene to load is null or empty");
             }
+        }
+
+        private void Load()
+        {
+            SceneManager.LoadScene(sceneToLoad);
+        }
+
+        private void Quit()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
     }
 }

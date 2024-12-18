@@ -9,10 +9,10 @@ namespace LetterQuest
     [CreateAssetMenu(menuName = "Letter Quest/InputDetection", fileName = "InputDetection")]
     public class InputDetection : ScriptableObject, InputActions.IUIActions
     {
-        private static EventSystem _eventSystem;
         private InputActions _inputActions;
-        private Vector2 _mousePosition;
-        private Camera _camera;
+        private static EventSystem _eventSystem;
+        private static Vector2 _mousePosition;
+        private static Camera _camera;
 
         #region Public Methods
 
@@ -35,7 +35,7 @@ namespace LetterQuest
             _inputActions = null;
         }
 
-        public Vector3 GetMouseWorldPosition()
+        public static Vector3 GetMouseWorldPosition()
         {
             Vector3 result = _mousePosition;
             result.z = -_camera.transform.position.z;
@@ -43,21 +43,20 @@ namespace LetterQuest
             return result;
         }
 
+        public static List<RaycastResult> GetHandOverUi(Vector3 position)
+        {
+            var eventData = new PointerEventData(EventSystem.current)
+            {
+                position = _camera.WorldToScreenPoint(position)
+            };
+            return GetUiRaycastData(eventData);
+        }
+
         public static List<RaycastResult> GetUiRaycastData(PointerEventData eventData)
         {
             var results = new List<RaycastResult>();
             _eventSystem.RaycastAll(eventData, results);
             return results;
-        }
-
-        public static List<RaycastResult> GetHandOverUi(Vector3 position)
-        {
-            Vector3 screenPoint = Camera.main.WorldToScreenPoint(position);
-            var eventData = new PointerEventData(EventSystem.current)
-            {
-                position = screenPoint
-            };
-            return GetUiRaycastData(eventData);
         }
 
         #endregion

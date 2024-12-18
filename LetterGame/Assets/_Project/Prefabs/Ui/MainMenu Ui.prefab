@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5495589127777252646}
   - component: {fileID: 7628734484637663896}
   - component: {fileID: 4339864973247323863}
+  - component: {fileID: 7552551509727283531}
   m_Layer: 5
   m_Name: Exit Btn
   m_TagString: Untagged
@@ -122,6 +123,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 7552551509727283531}
+        m_TargetAssemblyTypeName: LetterQuest.ButtonClickAudio, Assembly-CSharp
+        m_MethodName: PlayUiAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 4339864973247323863}
         m_TargetAssemblyTypeName: ScreenTransition, Assembly-CSharp
         m_MethodName: LoadScene
@@ -147,6 +160,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: Exit
+--- !u!114 &7552551509727283531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291647805768535639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4578a6d425e7384f8725ec76a6abdcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &828411402659988797
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,6 +859,7 @@ GameObject:
   - component: {fileID: 4188389116826625980}
   - component: {fileID: 5625923442046774537}
   - component: {fileID: 1408263453823877164}
+  - component: {fileID: 8363223962476859663}
   m_Layer: 5
   m_Name: Play Btn
   m_TagString: Untagged
@@ -943,6 +969,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 8363223962476859663}
+        m_TargetAssemblyTypeName: LetterQuest.ButtonClickAudio, Assembly-CSharp
+        m_MethodName: PlayUiAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1408263453823877164}
         m_TargetAssemblyTypeName: ScreenTransition, Assembly-CSharp
         m_MethodName: LoadScene
@@ -968,6 +1006,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: Gameplay
+--- !u!114 &8363223962476859663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6279366571012412441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4578a6d425e7384f8725ec76a6abdcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6313483479967181483
 GameObject:
   m_ObjectHideFlags: 0

@@ -80,12 +80,12 @@ namespace LetterQuest.Gameplay
         private void FinishLetterDrag(PointerEventData eventData)
         {
             IsDragging = false;
+            DoUiRaycast(eventData);
             meshRenderer.enabled = true;
-            AssignLetterToUiSlot(eventData);
             _letterTransform.SetPositionAndRotation(_originalPos, Quaternion.identity);
         }
 
-        private void AssignLetterToUiSlot(PointerEventData eventData)
+        private void DoUiRaycast(PointerEventData eventData)
         {
             AssignLetterToUiSlot(InputDetection.GetUiRaycastData(eventData));
         }
@@ -96,6 +96,7 @@ namespace LetterQuest.Gameplay
             {
                 if (results[i].gameObject.layer != LayerMask.NameToLayer("LetterSlot")) continue;
                 results[i].gameObject.GetComponent<LetterSlot>().SetLetterSlotText(ConvertAsciiToString());
+                break;
             }
         }
 

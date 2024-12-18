@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6951494741708714381}
   - component: {fileID: 1585467222610396154}
   - component: {fileID: 5455908898331955102}
+  - component: {fileID: 7703345334624410255}
   m_Layer: 5
   m_Name: Settings Btn
   m_TagString: Untagged
@@ -120,7 +121,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1585467222610396154}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7703345334624410255}
+        m_TargetAssemblyTypeName: LetterQuest.ButtonClickAudio, Assembly-CSharp
+        m_MethodName: PlayUiAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7703345334624410255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490409240608091301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4578a6d425e7384f8725ec76a6abdcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2770523469921620823
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,6 +419,7 @@ GameObject:
   - component: {fileID: 3934139342516422676}
   - component: {fileID: 5630722281041843157}
   - component: {fileID: 2233758189073471711}
+  - component: {fileID: 112923313266303798}
   m_Layer: 5
   m_Name: Quit Btn
   m_TagString: Untagged
@@ -515,6 +541,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 112923313266303798}
+        m_TargetAssemblyTypeName: LetterQuest.ButtonClickAudio, Assembly-CSharp
+        m_MethodName: PlayUiAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2233758189073471711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,6 +566,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: Splash
+--- !u!114 &112923313266303798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5904557399341652180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4578a6d425e7384f8725ec76a6abdcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6225601675530757859
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,6 +1001,7 @@ GameObject:
   - component: {fileID: 7883045591083272485}
   - component: {fileID: 8900634399554794925}
   - component: {fileID: 8146611064784756732}
+  - component: {fileID: 6224353335451933285}
   m_Layer: 5
   m_Name: Skip Btn
   m_TagString: Untagged
@@ -1072,6 +1123,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6224353335451933285}
+        m_TargetAssemblyTypeName: LetterQuest.ButtonClickAudio, Assembly-CSharp
+        m_MethodName: PlayUiAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6224353335451933285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7004089238798306566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4578a6d425e7384f8725ec76a6abdcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7004416351858161342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,6 +1293,7 @@ GameObject:
   - component: {fileID: 6377393521308811844}
   - component: {fileID: 6467869694968733855}
   - component: {fileID: 8511016287986395101}
+  - component: {fileID: 293776525326296854}
   m_Layer: 5
   m_Name: Volume Btn
   m_TagString: Untagged
@@ -1326,7 +1402,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6467869694968733855}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 293776525326296854}
+        m_TargetAssemblyTypeName: LetterQuest.ButtonClickAudio, Assembly-CSharp
+        m_MethodName: PlayUiAudio
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &293776525326296854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8141809825168553692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4578a6d425e7384f8725ec76a6abdcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8191298326066633017
 GameObject:
   m_ObjectHideFlags: 0
