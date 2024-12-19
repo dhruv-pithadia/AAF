@@ -1,10 +1,10 @@
 ﻿
 using TMPro;
 using UnityEngine;
-using LetterQuest.Framework.Audio;
+using LetterQuest.Gameplay.Data;
 using LetterQuest.Gameplay.Letters;
-using LetterQuest.Gameplay.Words.Data;
 using LetterQuest.Gameplay.Words.Ui;
+using LetterQuest.Gameplay.Words.Data;
 
 namespace LetterQuest.Gameplay.Words.Manager
 {
@@ -12,6 +12,8 @@ namespace LetterQuest.Gameplay.Words.Manager
     {
         [SerializeField] private int maxWordCount = 20;
         [SerializeField] private TMP_Text currentWord;
+        [SerializeField] private CurrentWordData currentWordData;
+        [SerializeField] private GameDifficulty gameDifficulty;
         [field: SerializeField] private LetterSlotHandler LetterSlotHandler { get; set; }
         [field: SerializeField] private ProgressBar ProgressBar { get; set; }
         private WordGenerator _wordGenerator;
@@ -21,18 +23,17 @@ namespace LetterQuest.Gameplay.Words.Manager
         public void Start()
         {
             LetterSlotHandler.Initialize();
-            ProgressBar.Initialize(new WordTrackingData(0, maxWordCount));
             LetterSlotHandler.WordCompleteEvent += OnWordComplete;
-            _wordGenerator = new WordGenerator();
-            _wordGenerator.SetWordDifficulty();
+            ProgressBar.Initialize(new WordTrackingData(0, maxWordCount));
+            _wordGenerator = new WordGenerator(gameDifficulty.Value);
             AssignNextWord();
         }
 
         public void OnDisable()
         {
+            LetterSlotHandler.WordCompleteEvent -= OnWordComplete;
             LetterSlotHandler.Dispose();
             ProgressBar.Dispose();
-            LetterSlotHandler.WordCompleteEvent -= OnWordComplete;
             if (ReferenceEquals(_wordGenerator, null)) return;
             _wordGenerator.Dispose();
             _wordGenerator = null;
@@ -44,7 +45,7 @@ namespace LetterQuest.Gameplay.Words.Manager
 
         public void SkipWord()
         {
-            PrepareNextWord();
+            OnWordComplete();
         }
 
         #endregion
@@ -53,12 +54,6 @@ namespace LetterQuest.Gameplay.Words.Manager
 
         private void OnWordComplete()
         {
-            AudioManager.Instance?.PlaySoundEffect(3);
-            PrepareNextWord();
-        }
-
-        private void PrepareNextWord()
-        {
             ProgressBar.WordCountTick();
             LetterSlotHandler.ResetAllSlots();
             AssignNextWord();
@@ -66,27 +61,17 @@ namespace LetterQuest.Gameplay.Words.Manager
 
         private void AssignNextWord()
         {
-            currentWord.text = _wordGenerator.GetNextWord();
-            if (currentWord.text == string.Empty)
-            {
-                IncreaseDifficulty();
-            }
-            else
-            {
-                LetterSlotHandler.OnWordUpdate(currentWord.text);
-            }
-        }
+            currentWordData.SetCurrentWord(_wordGenerator.GetNextWord());
 
-        private void IncreaseDifficulty()
-        {
-            if (_wordGenerator.GoToNextDifficulty())
+            if (currentWordData.GetText() == string.Empty)
             {
-                AssignNextWord();
+                //  TODO: Go to Player Metrics Screen
+                Debug.Log("[WordManager]: level ends here");
             }
             else
             {
-                //  TODO: End Game
-                Debug.Log("[WordManager]: The Game Is Done");
+                currentWord.text = currentWordData.GetText();
+                LetterSlotHandler.OnWordUpdate(currentWordData.GetTextUpperCase());
             }
         }
 

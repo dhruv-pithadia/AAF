@@ -7,8 +7,12 @@ namespace LetterQuest.Gameplay.Words
     {
         private readonly TextSerializer _textSerializer = new();
         private string[] _currentWords;
-        private int _currentDifficulty;
         private int _currentWordIndex;
+
+        public WordGenerator(int difficulty)
+        {
+            AssignWordsUsingDifficulty(difficulty);
+        }
 
         #region Public Methods
 
@@ -20,20 +24,6 @@ namespace LetterQuest.Gameplay.Words
             return result;
         }
 
-        public void SetWordDifficulty(int difficulty = 0)
-        {
-            _currentDifficulty = difficulty;
-            AssignWordsUsingDifficulty();
-        }
-
-        public bool GoToNextDifficulty()
-        {
-            _currentDifficulty++;
-            if (_currentDifficulty > 2) return false;
-            AssignWordsUsingDifficulty();
-            return true;
-        }
-
         public void Dispose()
         {
             _currentWords = null;
@@ -43,9 +33,9 @@ namespace LetterQuest.Gameplay.Words
 
         #region Private Methods
 
-        private void AssignWordsUsingDifficulty()
+        private void AssignWordsUsingDifficulty(int difficulty)
         {
-            _currentWords = _textSerializer.LoadTextFile(_currentDifficulty);
+            _currentWords = _textSerializer.LoadTextFile(difficulty);
             Shuffle(_currentWords);
             _currentWordIndex = 0;
         }

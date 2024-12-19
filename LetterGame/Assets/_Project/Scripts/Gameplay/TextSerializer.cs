@@ -57,9 +57,12 @@ namespace LetterQuest.Gameplay.IO
         {
             var results = _difficulties[difficulty] switch
             {
-                "easy" => "Hello\nWorld\nTable\nApple\nSnake\nBooks\nQuick\nJumbo\nDucky\nHawks",
-                "medium" => "Iceberg\nAbility\nCabinet\nAccount\nBattery\nCentury\nAnimals\nDeliver\nMarried\nPopular",
-                "hard" => "Watermelon\nUniversity\nManagement\nTechnology\nGovernment\nExperience\nActivities\nEverything\nProtection\nDiscussion",
+                "easy" => "Hello\nWorld\nTable\nApple\nSnake\nBooks\nQuick\nJumbo\nDucky\nHawks"+
+                            "\nGames\nDozen\nGoods\nHusky\nDaddy\nMommy\nEagle\nEarly\nHabit\nYacht",
+                "medium" => "Iceberg\nAbility\nCabinet\nAccount\nBattery\nCentury\nAnimals\nDeliver\nMarried\nPopular"+
+                            "\nCabbage\nEagerly\nFabrics\nHabitat\nMacaron\nPacific\nRabbits\nJacuzzi\nForaged\nWrinkle",
+                "hard" => "Watermelon\nUniversity\nManagement\nTechnology\nGovernment\nExperience\nActivities\nKickboards\nProtection\nDiscussion"+
+                            "\nBackpacker\nCalculator\nFairground\nHairstyles\nIlluminate\nJournalist\nLakeshores\nNanosecond\nOversupply\nSabertooth",
                 _ => string.Empty
             };
 

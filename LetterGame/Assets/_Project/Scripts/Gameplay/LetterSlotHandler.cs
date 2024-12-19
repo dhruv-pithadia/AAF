@@ -51,46 +51,23 @@ namespace LetterQuest.Gameplay.Letters
 
         #region Private Methods
 
+        private void AssignCurrentWord(string word) => _currentWord = word.ToCharArray();
         private bool DoesLetterMatchAtIndex(int i) => _currentWord[i] == letterSlots[i].GetLetter();
 
         private void OnLetterSlotUpdate(int index)
         {
-            AudioManager.Instance?.PlaySoundEffect(DoesLetterMatchAtIndex(index) ? 2 : 1);
-            if (CheckWordSpelling()) WordCompleteEvent?.Invoke();
-        }
-
-        private void AssignCurrentWord(string word)
-        {
-            _currentWord = word.ToCharArray();
-            ConvertWordToUpperCase();
-        }
-
-        private void TurnOffAllSlots()
-        {
-            for (var i = 0; i < letterSlots.Length; i++)
+            if (IsSpellingCorrect() == false)
             {
-                letterSlots[i].gameObject.SetActive(false);
+                AudioManager.Instance?.PlaySoundEffect(DoesLetterMatchAtIndex(index) ? 2 : 1);
+            }
+            else
+            {
+                AudioManager.Instance?.PlaySoundEffect(3);
+                WordCompleteEvent?.Invoke();
             }
         }
 
-        private void TurnOnSlots(int count)
-        {
-            for (var i = 0; i < count; i++)
-            {
-                letterSlots[i].gameObject.SetActive(true);
-            }
-        }
-
-        private void ConvertWordToUpperCase()
-        {
-            for (var i = 0; i < _currentWord.Length; i++)
-            {
-                if (char.GetNumericValue(_currentWord[i]) >= 65) continue;
-                _currentWord[i] = char.ToUpper(_currentWord[i]);
-            }
-        }
-
-        private bool CheckWordSpelling()
+        private bool IsSpellingCorrect()
         {
             var result = true;
             for (var i = 0; i < _currentWord.Length; i++)
@@ -108,6 +85,22 @@ namespace LetterQuest.Gameplay.Letters
             }
 
             return result;
+        }
+
+        private void TurnOffAllSlots()
+        {
+            for (var i = 0; i < letterSlots.Length; i++)
+            {
+                letterSlots[i].gameObject.SetActive(false);
+            }
+        }
+
+        private void TurnOnSlots(int count)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                letterSlots[i].gameObject.SetActive(true);
+            }
         }
 
         #endregion

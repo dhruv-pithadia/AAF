@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace LetterQuest.Framework.Input
 {
-    [CreateAssetMenu(menuName = "Letter Quest/InputDetection", fileName = "InputDetection")]
+    [CreateAssetMenu(menuName = "LetterQuest/InputDetection", fileName = "InputDetection")]
     public class InputDetection : ScriptableObject, InputActions.IUIActions
     {
         private InputActions _inputActions;
