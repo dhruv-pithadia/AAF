@@ -2,14 +2,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LetterQuest.Gameplay
+namespace LetterQuest.Gameplay.Letters.Ui
 {
-    public class LetterSlot : MonoBehaviour
+    public class LetterSlotUi : MonoBehaviour
     {
-        public delegate void LetterSlotUpdate();
+        [SerializeField] private int index;
+        public delegate void LetterSlotUpdate(int index);
         public event LetterSlotUpdate LetterSlotUpdateEvent;
         private Image _slotBorderImage;
         private TextMesh _textMesh;
+
+        #region Unity Methods
 
         private void Awake()
         {
@@ -18,14 +21,18 @@ namespace LetterQuest.Gameplay
             ResetLetterSlotText();
         }
 
-        public char GetLetter() => _textMesh.text[^1];
+        #endregion
+        
+        #region Public Methods
+
         public bool IsAssigned => _textMesh.text != string.Empty;
+        public char GetLetter() => IsAssigned ? _textMesh.text[^1] : char.MinValue;
         public void AssignSlotBorderColor(Color color) => _slotBorderImage.color = color;
 
         public void SetLetterSlotText(string text)
         {
             _textMesh.text = text;
-            LetterSlotUpdateEvent?.Invoke();
+            LetterSlotUpdateEvent?.Invoke(index);
         }
 
         public void ResetLetterSlotText()
@@ -33,5 +40,7 @@ namespace LetterQuest.Gameplay
             _textMesh.text = string.Empty;
             AssignSlotBorderColor(Color.black);
         }
+
+        #endregion
     }
 }

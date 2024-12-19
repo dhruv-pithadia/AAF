@@ -1,9 +1,9 @@
 
 using UnityEngine;
 using Leap.PhysicalHands;
-using LetterQuest.Gameplay;
+using LetterQuest.Gameplay.Letters;
 
-namespace LetterQuest
+namespace LetterQuest.Gameplay.Hands
 {
     public class GrabBehaviour : MonoBehaviour
     {

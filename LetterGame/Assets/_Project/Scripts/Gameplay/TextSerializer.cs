@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-namespace LetterQuest.Gameplay
+namespace LetterQuest.Gameplay.IO
 {
     public class TextSerializer
     {

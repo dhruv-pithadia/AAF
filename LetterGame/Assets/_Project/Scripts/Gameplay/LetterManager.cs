@@ -1,22 +1,25 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using LetterQuest.Framework.Input;
 
-namespace LetterQuest.Gameplay
+namespace LetterQuest.Gameplay.Letters.Manager
 {
+    [RequireComponent(typeof(LetterObjectPool))]
     public class LetterManager : MonoBehaviour
     {
-        private const int MaxLetters = 26;
         [SerializeField] private InputDetection inputDetection;
-        [SerializeField] private LetterObjectPool letterObjPool;
         [SerializeField] private List<Transform> letterPositions = new();
         private readonly List<LetterBlock> _letterList = new();
+        private LetterObjectPool letterObjPool;
+        private const int MaxLetters = 26;
 
         #region Unity Methods
 
         private void Start()
         {
             inputDetection.Initialize(Camera.main);
+            letterObjPool = GetComponent<LetterObjectPool>();
 
             int ascii = 65; //  65 = A | 90 = Z
             for (var i = 0; i < MaxLetters; i++)
@@ -34,6 +37,7 @@ namespace LetterQuest.Gameplay
             {
                 if (_letterList[i].IsDragging == false) continue;
                 _letterList[i].MoveLetter(InputDetection.GetMouseWorldPosition());
+                break;
             }
         }
 

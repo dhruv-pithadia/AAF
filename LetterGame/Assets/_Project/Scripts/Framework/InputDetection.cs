@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
-namespace LetterQuest
+namespace LetterQuest.Framework.Input
 {
     [CreateAssetMenu(menuName = "Letter Quest/InputDetection", fileName = "InputDetection")]
     public class InputDetection : ScriptableObject, InputActions.IUIActions

@@ -1,14 +1,13 @@
 
 using UnityEngine;
-using LetterQuest.Core;
 
-namespace LetterQuest
+namespace LetterQuest.Framework.Audio
 {
     public class ButtonClickAudio : MonoBehaviour
     {
         public void PlayUiAudio()
         {
-            AudioManager.Instance.PlaySoundEffect(0);
+            AudioManager.Instance?.PlaySoundEffect(0);
         }
     }
 }

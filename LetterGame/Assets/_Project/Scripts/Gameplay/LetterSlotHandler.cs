@@ -1,15 +1,17 @@
 ﻿
 using UnityEngine;
+using LetterQuest.Framework.Audio;
+using LetterQuest.Gameplay.Letters.Ui;
 
-namespace LetterQuest.Gameplay
+namespace LetterQuest.Gameplay.Letters
 {
     [System.Serializable]
     public class LetterSlotHandler
     {
-        [SerializeField] private LetterSlot[] letterSlots;
+        [SerializeField] private LetterSlotUi[] letterSlots;
         public delegate void WordComplete();
         public event WordComplete WordCompleteEvent;
-        private char[] _wordToSpell;
+        private char[] _currentWord;
 
         #region Public Methods
 
@@ -32,8 +34,8 @@ namespace LetterQuest.Gameplay
         public void OnWordUpdate(string word)
         {
             TurnOffAllSlots();
-            ConvertAndAssignWord(word);
-            TurnOnSlots(_wordToSpell.Length);
+            AssignCurrentWord(word);
+            TurnOnSlots(_currentWord.Length);
         }
 
         public void ResetAllSlots()
@@ -49,12 +51,18 @@ namespace LetterQuest.Gameplay
 
         #region Private Methods
 
-        private void OnLetterSlotUpdate()
+        private bool DoesLetterMatchAtIndex(int i) => _currentWord[i] == letterSlots[i].GetLetter();
+
+        private void OnLetterSlotUpdate(int index)
         {
-            if (CheckWordSpelling())
-            {
-                WordCompleteEvent?.Invoke();
-            }
+            AudioManager.Instance?.PlaySoundEffect(DoesLetterMatchAtIndex(index) ? 2 : 1);
+            if (CheckWordSpelling()) WordCompleteEvent?.Invoke();
+        }
+
+        private void AssignCurrentWord(string word)
+        {
+            _currentWord = word.ToCharArray();
+            ConvertWordToUpperCase();
         }
 
         private void TurnOffAllSlots()
@@ -73,33 +81,33 @@ namespace LetterQuest.Gameplay
             }
         }
 
-        private void ConvertAndAssignWord(string word)
+        private void ConvertWordToUpperCase()
         {
-            _wordToSpell = word.ToCharArray();
-
-            for (var i = 0; i < _wordToSpell.Length; i++)
+            for (var i = 0; i < _currentWord.Length; i++)
             {
-                if (char.GetNumericValue(_wordToSpell[i]) >= 65) continue;
-                _wordToSpell[i] = char.ToUpper(_wordToSpell[i]);
+                if (char.GetNumericValue(_currentWord[i]) >= 65) continue;
+                _currentWord[i] = char.ToUpper(_currentWord[i]);
             }
         }
 
         private bool CheckWordSpelling()
         {
-            for (var i = 0; i < _wordToSpell.Length; i++)
+            var result = true;
+            for (var i = 0; i < _currentWord.Length; i++)
             {
-                if (letterSlots[i].IsAssigned == false) return false;
-                
-                if (_wordToSpell[i] != letterSlots[i].GetLetter())
+                if (DoesLetterMatchAtIndex(i))
                 {
-                    letterSlots[i].AssignSlotBorderColor(Color.red);
-                    return false;
+                    letterSlots[i].AssignSlotBorderColor(Color.green);
                 }
-
-                letterSlots[i].AssignSlotBorderColor(Color.green);
+                else
+                {
+                    result = false;
+                    if (letterSlots[i].IsAssigned == false) continue;
+                    letterSlots[i].AssignSlotBorderColor(Color.red);
+                }
             }
 
-            return true;
+            return result;
         }
 
         #endregion

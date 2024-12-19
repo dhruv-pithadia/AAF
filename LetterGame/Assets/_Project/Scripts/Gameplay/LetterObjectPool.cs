@@ -1,13 +1,10 @@
 
-using LetterQuest.Utils;
+using LetterQuest.Framework.Utilities;
 
-namespace LetterQuest.Gameplay
+namespace LetterQuest.Gameplay.Letters
 {
     public class LetterObjectPool : ObjectPooler<LetterBlock>
     {
-        private void Awake() => Initialize();
-        private void OnDisable() => Dispose();
-
         public LetterBlock GetLetter() => ObjectPool.Get();
         public void ReturnLetter(LetterBlock obj) => ObjectPool.Release(obj);
     }

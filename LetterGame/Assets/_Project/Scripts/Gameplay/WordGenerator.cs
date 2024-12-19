@@ -1,5 +1,7 @@
 
-namespace LetterQuest.Gameplay
+using LetterQuest.Gameplay.IO;
+
+namespace LetterQuest.Gameplay.Words
 {
     public class WordGenerator
     {
@@ -18,7 +20,7 @@ namespace LetterQuest.Gameplay
             return result;
         }
 
-        public void SetWordDifficulty(int difficulty)
+        public void SetWordDifficulty(int difficulty = 0)
         {
             _currentDifficulty = difficulty;
             AssignWordsUsingDifficulty();

@@ -140,7 +140,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 0.4.6
+  bundleVersion: 0.4.7
   preloadedAssets:
   - {fileID: -944628639613478452, guid: 0dfbe3b53a53c4342839f1390439d427, type: 3}
   - {fileID: 11400000, guid: 661b496f0ea715b4face1b220406fb43, type: 2}
@@ -544,12 +544,12 @@ PlayerSettings:
   - m_BuildTarget: Android
     m_EncodingQuality: 1
   - m_BuildTarget: Standalone
-    m_EncodingQuality: 1
+    m_EncodingQuality: 0
   m_BuildTargetGroupHDRCubemapEncodingQuality:
   - m_BuildTarget: Android
     m_EncodingQuality: 1
   - m_BuildTarget: Standalone
-    m_EncodingQuality: 1
+    m_EncodingQuality: 0
   m_BuildTargetGroupLightmapSettings:
   - m_BuildTarget: Standalone
     m_TextureStreamingEnabled: 0

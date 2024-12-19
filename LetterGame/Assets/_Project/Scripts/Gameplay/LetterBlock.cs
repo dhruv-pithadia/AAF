@@ -3,8 +3,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using LetterQuest.Framework.Input;
+using LetterQuest.Gameplay.Letters.Ui;
 
-namespace LetterQuest.Gameplay
+namespace LetterQuest.Gameplay.Letters
 {
     public class LetterBlock : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
@@ -95,7 +97,7 @@ namespace LetterQuest.Gameplay
             for (var i = 0; i < results.Count; i++)
             {
                 if (results[i].gameObject.layer != LayerMask.NameToLayer("LetterSlot")) continue;
-                results[i].gameObject.GetComponent<LetterSlot>().SetLetterSlotText(ConvertAsciiToString());
+                results[i].gameObject.GetComponent<LetterSlotUi>().SetLetterSlotText(ConvertAsciiToString());
                 break;
             }
         }

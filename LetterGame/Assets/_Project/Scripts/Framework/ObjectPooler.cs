@@ -1,22 +1,35 @@
 
 using UnityEngine;
 
-namespace LetterQuest.Utils
+namespace LetterQuest.Framework.Utilities
 {
     public abstract class ObjectPooler<T> : MonoBehaviour where T : MonoBehaviour
     {
         [SerializeField] private T prefab;
-        [SerializeField] protected int maxSize;
-        [SerializeField] protected int initialSize;
-        [SerializeField] protected bool collectionCheck;
+        [SerializeField] private int maxSize;
+        [SerializeField] private int initialSize;
+        [SerializeField] private bool collectionCheck;
         [SerializeField] private Transform objParent;
         protected UnityEngine.Pool.ObjectPool<T> ObjectPool;
 
-        protected void Initialize()
+        #region Unity Methods
+
+        private void Awake()
         {
             ObjectPool = new UnityEngine.Pool.ObjectPool<T>(Create, OnGetCallback, OnReleaseCallback,
                 OnDestroyCallback, collectionCheck, initialSize, maxSize);
         }
+
+        private void OnDisable()
+        {
+            if (ReferenceEquals(ObjectPool, null)) return;
+            ObjectPool.Dispose();
+            ObjectPool = null;
+        }
+
+        #endregion
+
+        #region Private Methods
 
         private T Create() => Instantiate(prefab, Vector3.zero, Quaternion.identity, objParent);
         private static void OnGetCallback(T obj) => obj.gameObject.SetActive(true);
@@ -29,11 +42,6 @@ namespace LetterQuest.Utils
             Destroy(obj.gameObject);
         }
 
-        protected void Dispose()
-        {
-            if (ReferenceEquals(ObjectPool, null)) return;
-            ObjectPool.Dispose();
-            ObjectPool = null;
-        }
+        #endregion
     }
 }

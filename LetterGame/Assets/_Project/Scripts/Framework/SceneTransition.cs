@@ -2,9 +2,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace LetterQuest.Core
+namespace LetterQuest.Framework.Scenes
 {
-    public class ScreenTransition : MonoBehaviour
+    public class SceneTransition : MonoBehaviour
     {
         [SerializeField] private string sceneToLoad = string.Empty;
 
