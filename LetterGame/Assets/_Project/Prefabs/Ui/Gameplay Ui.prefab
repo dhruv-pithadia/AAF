@@ -564,6 +564,7 @@ MonoBehaviour:
   currentWord: {fileID: 332858344494787295}
   currentWordData: {fileID: 11400000, guid: b34f71084224e5b4fb1b56f2c2656147, type: 2}
   gameDifficulty: {fileID: 11400000, guid: a917899ca9bb98343944af4d137189fc, type: 2}
+  animatorHook: {fileID: 126981307859724469}
   <LetterSlotHandler>k__BackingField:
     letterSlots:
     - {fileID: 6531416031364072703}
@@ -1390,6 +1391,7 @@ GameObject:
   - component: {fileID: 6558358359001176994}
   - component: {fileID: 1722466335792060534}
   - component: {fileID: 7381970018034558585}
+  - component: {fileID: 126981307859724469}
   m_Layer: 5
   m_Name: Word Overlay Canvas
   m_TagString: Untagged
@@ -1439,7 +1441,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: -628227901
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &7381970018034558585
 MonoBehaviour:
@@ -1464,6 +1466,20 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!114 &126981307859724469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6591210929356200601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f3ddc1383d6e6141993b177eae98469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerName: WordCompleteTrigger
+  animator: {fileID: 2127947307549221546}
 --- !u!1 &7004089238798306566
 GameObject:
   m_ObjectHideFlags: 0
@@ -1621,6 +1637,7 @@ GameObject:
   - component: {fileID: 1318548668367185644}
   - component: {fileID: 7033423149371482909}
   - component: {fileID: 332858344494787295}
+  - component: {fileID: 2127947307549221546}
   m_Layer: 5
   m_Name: Current Word Text (TMP)
   m_TagString: Untagged
@@ -1744,6 +1761,27 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!95 &2127947307549221546
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7004416351858161342}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d44e237d2fa2f8340ae60db9a25e6155, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8141809825168553692
 GameObject:
   m_ObjectHideFlags: 0

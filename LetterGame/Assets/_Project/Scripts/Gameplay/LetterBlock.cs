@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using LetterQuest.Framework.Animation;
 using LetterQuest.Framework.Input;
 using LetterQuest.Gameplay.Letters.Ui;
 
@@ -13,6 +14,7 @@ namespace LetterQuest.Gameplay.Letters
         [SerializeField] private MeshRenderer meshRenderer;
         [SerializeField] private Canvas canvas;
         public bool IsDragging { get; private set; }
+        private AnimatorHook _animatorHook;
         private Transform _letterTransform;
         private TMP_Text _letterText;
         private Vector3 _originalPos;
@@ -24,6 +26,7 @@ namespace LetterQuest.Gameplay.Letters
         {
             _letterTransform = transform;
             canvas.worldCamera = Camera.main;
+            _animatorHook = GetComponent<AnimatorHook>();
             _letterText = GetComponentInChildren<TMP_Text>();
         }
 
@@ -44,7 +47,12 @@ namespace LetterQuest.Gameplay.Letters
         public void OnDespawn()
         {
             AssignLetterText(string.Empty);
-            _letterTransform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            MoveLetter(Vector3.zero);
+        }
+
+        public void PlayHint()
+        {
+            _animatorHook.Play();
         }
 
         public void OnDragStart()
@@ -56,7 +64,7 @@ namespace LetterQuest.Gameplay.Letters
         {
             meshRenderer.enabled = true;
             AssignLetterToUiSlot(InputDetection.GetHandOverUi(position));
-            _letterTransform.SetPositionAndRotation(_originalPos, Quaternion.identity);
+            MoveLetter(_originalPos);
         }
 
         #endregion
@@ -84,7 +92,7 @@ namespace LetterQuest.Gameplay.Letters
             IsDragging = false;
             DoUiRaycast(eventData);
             meshRenderer.enabled = true;
-            _letterTransform.SetPositionAndRotation(_originalPos, Quaternion.identity);
+            MoveLetter(_originalPos);
         }
 
         private void DoUiRaycast(PointerEventData eventData)

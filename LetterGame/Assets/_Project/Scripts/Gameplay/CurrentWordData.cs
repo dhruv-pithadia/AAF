@@ -8,8 +8,9 @@ namespace LetterQuest.Gameplay.Words.Data
     public class CurrentWordData : ScriptableObject
     {
         [SerializeField] private int[] qwertyIndicies;
-        public delegate void WordAssigned();
-        public event WordAssigned WordAssignedEvent;
+        public delegate void SimpleDelegate();
+        public event SimpleDelegate WordAssignedEvent;
+        public event SimpleDelegate WordCompleteEvent;
         private int[] randomIndicies;
         private string currentWord;
 
@@ -31,6 +32,11 @@ namespace LetterQuest.Gameplay.Words.Data
         {
             currentWord = word;
             WordAssignedEvent?.Invoke();
+        }
+
+        public void WordComplete()
+        {
+            WordCompleteEvent?.Invoke();
         }
 
         #endregion

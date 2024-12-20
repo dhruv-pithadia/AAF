@@ -27,8 +27,8 @@ namespace LetterQuest.Gameplay.Letters.Manager
             inputDetection.Initialize(Camera.main);
             letterObjPool = GetComponent<LetterObjectPool>();
             currentWordData.WordAssignedEvent += OnWordAssigned;
+            currentWordData.WordCompleteEvent += OnWordComplete;
             SetupPositioningMode();
-            PlaceLetters();
         }
 
         private void LateUpdate()
@@ -43,6 +43,7 @@ namespace LetterQuest.Gameplay.Letters.Manager
 
         private void OnDisable()
         {
+            currentWordData.WordCompleteEvent -= OnWordComplete;
             currentWordData.WordAssignedEvent -= OnWordAssigned;
             inputDetection.Dispose();
             _letterList?.Clear();
@@ -57,9 +58,13 @@ namespace LetterQuest.Gameplay.Letters.Manager
             mode = (LetterPositioningMode)gameDifficulty.Value;
         }
 
-        private void OnWordAssigned()
+        private void OnWordComplete()
         {
             RemoveLetters();
+        }
+
+        private void OnWordAssigned()
+        {
             PlaceLetters();
         }
 
@@ -68,12 +73,15 @@ namespace LetterQuest.Gameplay.Letters.Manager
             switch (mode)
             {
                 case LetterPositioningMode.Alphabet:
+                    //Debug.Log("[LetterManager]: Placing letters alphabetically");
                     PlaceLettersAlphabetically();
                     break;
                 case LetterPositioningMode.Qwerty:
+                    //Debug.Log("[LetterManager]: Placing letters qwerty");
                     PlaceLetters(currentWordData.GetQwertyIndicies());
                     break;
                 default:
+                    //Debug.Log("[LetterManager]: Placing letters randomly");
                     PlaceLetters(currentWordData.GetRandomIndicies());
                     break;
             }

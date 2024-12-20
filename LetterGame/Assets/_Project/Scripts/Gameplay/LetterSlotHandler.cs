@@ -56,7 +56,7 @@ namespace LetterQuest.Gameplay.Letters
 
         private void OnLetterSlotUpdate(int index)
         {
-            if (IsSpellingCorrect() == false)
+            if (IsWordSpelledCorrect() == false)
             {
                 AudioManager.Instance?.PlaySoundEffect(DoesLetterMatchAtIndex(index) ? 2 : 1);
             }
@@ -67,7 +67,7 @@ namespace LetterQuest.Gameplay.Letters
             }
         }
 
-        private bool IsSpellingCorrect()
+        private bool IsWordSpelledCorrect()
         {
             var result = true;
             for (var i = 0; i < _currentWord.Length; i++)
