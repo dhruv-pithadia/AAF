@@ -65,14 +65,14 @@ namespace LetterQuest.Framework.Audio
         {
             _backgroundMusicSource.clip = musicClips;
             _backgroundMusicSource.priority = 128;
-            _backgroundMusicSource.volume = 0.75f;
+            _backgroundMusicSource.volume = 0.5f;
             _backgroundMusicSource.loop = true;
             _backgroundMusicSource.Play();
         }
 
         private void ConfigureSfxSource()
         {
-            _sfxSource.priority = 32;
+            _sfxSource.priority = 16;
             _sfxSource.loop = false;
             _sfxSource.volume = 1f;
         }

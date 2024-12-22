@@ -2,6 +2,7 @@
 using UnityEngine;
 using LetterQuest.Framework.Audio;
 using LetterQuest.Gameplay.Letters.Ui;
+using LetterQuest.Gameplay.Words.Manager;
 
 namespace LetterQuest.Gameplay.Letters
 {
@@ -9,14 +10,14 @@ namespace LetterQuest.Gameplay.Letters
     public class LetterSlotHandler
     {
         [SerializeField] private LetterSlotUi[] letterSlots;
-        public delegate void WordComplete();
-        public event WordComplete WordCompleteEvent;
+        private WordManager _wordManager;
         private char[] _currentWord;
 
         #region Public Methods
 
-        public void Initialize()
+        public void Initialize(WordManager wordManager)
         {
+            _wordManager = wordManager;
             for (var i = 0; i < letterSlots.Length; i++)
             {
                 letterSlots[i].LetterSlotUpdateEvent += OnLetterSlotUpdate;
@@ -54,16 +55,19 @@ namespace LetterQuest.Gameplay.Letters
         private void AssignCurrentWord(string word) => _currentWord = word.ToCharArray();
         private bool DoesLetterMatchAtIndex(int i) => _currentWord[i] == letterSlots[i].GetLetter();
 
-        private void OnLetterSlotUpdate(int index)
+        private void OnLetterSlotUpdate(int slotIndex)
         {
             if (IsWordSpelledCorrect() == false)
             {
-                AudioManager.Instance?.PlaySoundEffect(DoesLetterMatchAtIndex(index) ? 2 : 1);
+                var isLetterCorrect = DoesLetterMatchAtIndex(slotIndex);
+                letterSlots[slotIndex].SetBlinkAnimation(!isLetterCorrect);
+                AudioManager.Instance?.PlaySoundEffect(isLetterCorrect ? 2 : 1);
             }
             else
             {
+                letterSlots[slotIndex].SetBlinkAnimation(false);
                 AudioManager.Instance?.PlaySoundEffect(3);
-                WordCompleteEvent?.Invoke();
+                _wordManager.OnWordComplete();
             }
         }
 

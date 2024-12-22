@@ -8,18 +8,14 @@ namespace LetterQuest.Framework.Animation
         [SerializeField] private string triggerName;
         [SerializeField] private Animator animator;
 
-        private void Awake()
-        {
-            if (ReferenceEquals(animator, null) == false) return;
-            animator = GetComponent<Animator>();
-            if (ReferenceEquals(animator, null) == false) return;
-            animator = GetComponentInChildren<Animator>();
-        }
-
         public void Play()
         {
             animator.SetTrigger(triggerName);
-            //Debug.Log($"[AnimatorHook]: playing trigger - {triggerName}");
+        }
+
+        public void Play(bool value)
+        {
+            animator.SetBool(triggerName, value);
         }
     }
 }

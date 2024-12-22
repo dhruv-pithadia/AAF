@@ -14,7 +14,7 @@ namespace LetterQuest.Framework.Scenes
 
             if (sceneToLoad == "Exit")
             {
-                Invoke(nameof(Quit), 1f);
+                Invoke(nameof(Quit), 2f);
             }
             else if (sceneToLoad != string.Empty)
             {

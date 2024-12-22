@@ -1,14 +1,16 @@
 ﻿
 using UnityEngine;
 using UnityEngine.UI;
+using LetterQuest.Framework.Animation;
 
 namespace LetterQuest.Gameplay.Letters.Ui
 {
     public class LetterSlotUi : MonoBehaviour
     {
         [SerializeField] private int index;
-        public delegate void LetterSlotUpdate(int index);
-        public event LetterSlotUpdate LetterSlotUpdateEvent;
+        [SerializeField] private AnimatorHook animatorHook;
+        public delegate void IndexDelegate(int index);
+        public event IndexDelegate LetterSlotUpdateEvent;
         private Image _slotBorderImage;
         private TextMesh _textMesh;
 
@@ -22,7 +24,7 @@ namespace LetterQuest.Gameplay.Letters.Ui
         }
 
         #endregion
-        
+
         #region Public Methods
 
         public bool IsAssigned => _textMesh.text != string.Empty;
@@ -33,6 +35,11 @@ namespace LetterQuest.Gameplay.Letters.Ui
         {
             _textMesh.text = text;
             LetterSlotUpdateEvent?.Invoke(index);
+        }
+
+        public void SetBlinkAnimation(bool isBlinking)
+        {
+            animatorHook.Play(isBlinking);
         }
 
         public void ResetLetterSlotText()

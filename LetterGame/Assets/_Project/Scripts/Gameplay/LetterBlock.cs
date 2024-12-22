@@ -3,8 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
-using LetterQuest.Framework.Animation;
 using LetterQuest.Framework.Input;
+using LetterQuest.Framework.Animation;
 using LetterQuest.Gameplay.Letters.Ui;
 
 namespace LetterQuest.Gameplay.Letters
@@ -50,18 +50,15 @@ namespace LetterQuest.Gameplay.Letters
             MoveLetter(Vector3.zero);
         }
 
-        public void PlayHint()
-        {
-            _animatorHook.Play();
-        }
-
         public void OnDragStart()
         {
             meshRenderer.enabled = false;
+            _animatorHook.Play(true);
         }
 
         public void OnDragEnd(Vector3 position)
         {
+            _animatorHook.Play(false);
             meshRenderer.enabled = true;
             AssignLetterToUiSlot(InputDetection.GetHandOverUi(position));
             MoveLetter(_originalPos);
@@ -91,6 +88,7 @@ namespace LetterQuest.Gameplay.Letters
         {
             IsDragging = false;
             DoUiRaycast(eventData);
+            _animatorHook.Play(false);
             meshRenderer.enabled = true;
             MoveLetter(_originalPos);
         }

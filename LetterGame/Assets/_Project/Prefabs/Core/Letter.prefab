@@ -20,7 +20,7 @@ GameObject:
   m_TagString: Letter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &5614615791787768207
 Transform:
@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 0.5}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6356636856604823891}
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f3ddc1383d6e6141993b177eae98469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerName: BlinkTrigger
+  triggerName: Blink
   animator: {fileID: 4445830754222628727}
 --- !u!33 &8054677725272172609
 MeshFilter:
@@ -135,7 +135,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 0.5, z: 2}
+  m_Size: {x: 0.75, y: 0.75, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4768780701898417695
 Rigidbody:
@@ -182,7 +182,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &6356636856604823891
 RectTransform:
@@ -304,7 +304,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &2334255259717615117
 RectTransform:
@@ -355,8 +355,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: W
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c612f5b8c7604ad4d8e62d63b7a98d69, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: c612f5b8c7604ad4d8e62d63b7a98d69, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -380,8 +380,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 1.8
-  m_fontSizeBase: 1.8
+  m_fontSize: 1.6
+  m_fontSizeBase: 1.6
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

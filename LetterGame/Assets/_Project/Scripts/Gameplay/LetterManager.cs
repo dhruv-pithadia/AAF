@@ -1,4 +1,5 @@
 
+using TMPro;
 using UnityEngine;
 using LetterQuest.Gameplay.Data;
 using System.Collections.Generic;
@@ -51,16 +52,20 @@ namespace LetterQuest.Gameplay.Letters.Manager
 
         #endregion
 
+        public void PickLetterArrangement(TMP_Dropdown change)
+        {
+            RemoveLetters();
+            if(change.value == 0) SetupPositioningMode();
+            else if(change.value == 1) mode = LetterPositioningMode.Alphabet;
+            else mode = LetterPositioningMode.Qwerty;
+            PlaceLetters();
+        }
+
         #region Private Methods
 
         private void SetupPositioningMode()
         {
             mode = (LetterPositioningMode)gameDifficulty.Value;
-        }
-
-        private void OnWordComplete()
-        {
-            RemoveLetters();
         }
 
         private void OnWordAssigned()
@@ -87,17 +92,6 @@ namespace LetterQuest.Gameplay.Letters.Manager
             }
         }
 
-        private void PlaceLetters(int[] asciiArray)
-        {
-            for (var i = 0; i < asciiArray.Length; i++)
-            {
-                if (i >= MaxLetters) break;
-                var letter = letterObjPool.GetLetter();
-                letter.OnSpawn(letterPositions.GetPositionAt(mode, i), asciiArray[i]);
-                _letterList.Add(letter);
-            }
-        }
-
         private void PlaceLettersAlphabetically()
         {
             var ascii = 65; //  65 = A | 90 = Z
@@ -105,9 +99,27 @@ namespace LetterQuest.Gameplay.Letters.Manager
             {
                 var letter = letterObjPool.GetLetter();
                 letter.OnSpawn(letterPositions.GetPositionAt(mode, i), ascii);
+                letter.transform.localScale = letterPositions.GetScale(mode);
                 _letterList.Add(letter);
                 ascii++;
             }
+        }
+
+        private void PlaceLetters(int[] asciiArray)
+        {
+            for (var i = 0; i < asciiArray.Length; i++)
+            {
+                if (i >= MaxLetters) break;
+                var letter = letterObjPool.GetLetter();
+                letter.OnSpawn(letterPositions.GetPositionAt(mode, i), asciiArray[i]);
+                letter.transform.localScale = letterPositions.GetScale(mode);
+                _letterList.Add(letter);
+            }
+        }
+
+        private void OnWordComplete()
+        {
+            RemoveLetters();
         }
 
         private void RemoveLetters()

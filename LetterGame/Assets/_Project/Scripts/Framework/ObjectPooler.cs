@@ -38,7 +38,6 @@ namespace LetterQuest.Framework.Utilities
         private static void OnDestroyCallback(T obj)
         {
             if (ReferenceEquals(obj, null)) return;
-            Debug.Log("[ObjectPooler]: On Destroy Callback");
             Destroy(obj.gameObject);
         }
 

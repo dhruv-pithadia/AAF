@@ -13,6 +13,10 @@ namespace LetterQuest.Gameplay.Letters.Data
         public List<Vector3> medLevelPositions = new();
         public List<Vector3> hardLevelPositions = new();
 
+        [SerializeField] private Vector3 smallScale;
+        [SerializeField] private Vector3 mediumScale;
+        [SerializeField] private Vector3 largeScale;
+
         public Vector3 GetPositionAt(LetterPositioningMode mode, int index)
         {
             return mode switch
@@ -22,6 +26,16 @@ namespace LetterQuest.Gameplay.Letters.Data
                 LetterPositioningMode.Medium => medLevelPositions[index],
                 LetterPositioningMode.Hard => hardLevelPositions[index],
                 _ => alphabetPositions[index]
+            };
+        }
+
+        public Vector3 GetScale(LetterPositioningMode mode)
+        {
+            return mode switch
+            {
+                LetterPositioningMode.Medium => mediumScale,
+                LetterPositioningMode.Easy => largeScale,
+                _ => smallScale
             };
         }
     }
