@@ -16,6 +16,7 @@ namespace LetterQuest.Gameplay.Letters
         public bool IsDragging { get; private set; }
         private AnimatorHook _animatorHook;
         private Transform _letterTransform;
+        private BoxCollider boxCollider;
         private TMP_Text _letterText;
         private Vector3 _originalPos;
         private int _asciiCode;
@@ -26,6 +27,7 @@ namespace LetterQuest.Gameplay.Letters
         {
             _letterTransform = transform;
             canvas.worldCamera = Camera.main;
+            boxCollider = GetComponent<BoxCollider>();
             _animatorHook = GetComponent<AnimatorHook>();
             _letterText = GetComponentInChildren<TMP_Text>();
         }
@@ -44,6 +46,10 @@ namespace LetterQuest.Gameplay.Letters
             AssignLetterText(ConvertAsciiToString());
         }
 
+        public bool IsDetectable => boxCollider.enabled;
+        public void EnableCollision() => boxCollider.enabled = true;
+        public void DisableCollision() => boxCollider.enabled = false;
+
         public void OnDespawn()
         {
             AssignLetterText(string.Empty);
@@ -61,7 +67,7 @@ namespace LetterQuest.Gameplay.Letters
             _animatorHook.Play(false);
             meshRenderer.enabled = true;
             AssignLetterToUiSlot(InputDetection.GetHandOverUi(position));
-            MoveLetter(_originalPos);
+            _letterTransform.SetPositionAndRotation(_originalPos, Quaternion.identity);
         }
 
         #endregion

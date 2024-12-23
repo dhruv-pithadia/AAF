@@ -158,10 +158,10 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0.8
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
@@ -189,7 +189,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 4294967295
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -375,13 +375,13 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 360
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -422,11 +422,11 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 4294967295
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 0
+  m_Antialiasing: 3
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -652,7 +652,7 @@ MonoBehaviour:
   _inputProvider: {fileID: 1077124144}
   _contactMode: 1
   _hoverDistance: 0
-  _contactDistance: 0.002
+  _contactDistance: 0.005
   onHover:
     m_PersistentCalls:
       m_Calls: []
@@ -713,6 +713,16 @@ PrefabInstance:
       propertyPath: leapProvider
       value: 
       objectReference: {fileID: 1077124144}
+    - target: {fileID: 1349471062293871306, guid: 340b37125bff23b48a8ea47143e0752d,
+        type: 3}
+      propertyPath: letterManager
+      value: 
+      objectReference: {fileID: 4973870460086050974}
+    - target: {fileID: 1349471062293871306, guid: 340b37125bff23b48a8ea47143e0752d,
+        type: 3}
+      propertyPath: _letterManager
+      value: 
+      objectReference: {fileID: 4973870460086050974}
     - target: {fileID: 4194031445926205090, guid: 340b37125bff23b48a8ea47143e0752d,
         type: 3}
       propertyPath: m_LocalPosition.x

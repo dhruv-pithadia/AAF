@@ -51,7 +51,9 @@ namespace LetterQuest.Gameplay.Letters.Manager
         }
 
         #endregion
-
+        
+        #region Public Methods
+        
         public void PickLetterArrangement(TMP_Dropdown change)
         {
             RemoveLetters();
@@ -60,6 +62,26 @@ namespace LetterQuest.Gameplay.Letters.Manager
             else mode = LetterPositioningMode.Qwerty;
             PlaceLetters();
         }
+
+        public void TurnOffCollidersExcept(LetterBlock letterBlock)
+        {
+            for (int i = 0; i < _letterList.Count; i++)
+            {
+                if (ReferenceEquals(_letterList[i], letterBlock)) continue;
+                _letterList[i].DisableCollision();
+            }
+        }
+
+        public void TurnOnColliders()
+        {
+            for (int i = 0; i < _letterList.Count; i++)
+            {
+                if (_letterList[i].IsDetectable) continue;
+                _letterList[i].EnableCollision();
+            }
+        }
+        
+        #endregion
 
         #region Private Methods
 

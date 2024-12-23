@@ -113,6 +113,6 @@ MonoBehaviour:
   - {x: 7.6, y: 0.85, z: 6}
   - {x: -7.6, y: -1.25, z: 6}
   - {x: -5.7, y: -1.25, z: 6}
-  smallScale: {x: 1.5, y: 1.5, z: 0.25}
-  mediumScale: {x: 2.25, y: 2.25, z: 0.25}
-  largeScale: {x: 3, y: 3, z: 0.25}
+  smallScale: {x: 1.5, y: 1.5, z: 0.5}
+  mediumScale: {x: 2.25, y: 2.25, z: 0.5}
+  largeScale: {x: 3, y: 3, z: 0.5}

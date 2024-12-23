@@ -3004,6 +3004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18af2e78853258d4a9d869d62411385e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _letterManager: {fileID: 0}
 --- !u!1 &7879022121675027434
 GameObject:
   m_ObjectHideFlags: 0
@@ -3081,7 +3082,7 @@ SkinnedMeshRenderer:
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
@@ -3292,7 +3293,7 @@ SkinnedMeshRenderer:
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
