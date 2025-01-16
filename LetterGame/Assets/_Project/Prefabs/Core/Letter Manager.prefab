@@ -45,11 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2848307e3628a4fc58f13d0f9784a2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
-  letterPositions: {fileID: 11400000, guid: 45456b28b8f14e4409811f4d4a4dc611, type: 2}
-  currentWordData: {fileID: 11400000, guid: b34f71084224e5b4fb1b56f2c2656147, type: 2}
-  gameDifficulty: {fileID: 11400000, guid: a917899ca9bb98343944af4d137189fc, type: 2}
+  <BlockPlacer>k__BackingField:
+    mode: 0
+    letterPositions: {fileID: 11400000, guid: 45456b28b8f14e4409811f4d4a4dc611, type: 2}
+    gameDifficulty: {fileID: 11400000, guid: a917899ca9bb98343944af4d137189fc, type: 2}
+  <SlotHandler>k__BackingField:
+    playerMetrics: {fileID: 11400000, guid: 9380911812651a24ca6059439e2d53d4, type: 2}
   inputDetection: {fileID: 11400000, guid: 95bab0164cd54b941bfd09cb929e92a7, type: 2}
+  eventBus: {fileID: 11400000, guid: fee95f1a2a2addf4d812ac134e238920, type: 2}
 --- !u!114 &560070698095801516
 MonoBehaviour:
   m_ObjectHideFlags: 0

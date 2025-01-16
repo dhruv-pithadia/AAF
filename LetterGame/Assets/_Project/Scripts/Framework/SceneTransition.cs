@@ -11,18 +11,19 @@ namespace LetterQuest.Framework.Scenes
         public void LoadScene()
         {
             if (IsInvoking()) return;
+            if (string.IsNullOrEmpty(sceneToLoad) == false) ValidateScenePath();
+            else Invoke(nameof(Quit), 3f);
+        }
 
-            if (sceneToLoad == "Exit")
+        private void ValidateScenePath()
+        {
+            if (SceneUtility.GetBuildIndexByScenePath(sceneToLoad) == -1)
             {
-                Invoke(nameof(Quit), 2f);
-            }
-            else if (sceneToLoad != string.Empty)
-            {
-                Invoke(nameof(Load), 0.5f);
+                Debug.LogError($"[SceneTransition]: scene to load ( {sceneToLoad} ) does not exist");
             }
             else
             {
-                Debug.LogError("[SceneTransition]: scene to load is null or empty");
+                Invoke(nameof(Load), 0.5f);
             }
         }
 

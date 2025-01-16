@@ -364,9 +364,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7865046116919414141}
-        m_TargetAssemblyTypeName: LetterQuest.Framework.Audio.ButtonClickAudio, Assembly-CSharp
-        m_MethodName: PlayUiAudio
-        m_Mode: 1
+        m_TargetAssemblyTypeName: LetterQuest.Framework.Audio.AudioOneShot, Assembly-CSharp
+        m_MethodName: PlayOneShot
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -375,9 +375,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3285521343843130035}
-        m_TargetAssemblyTypeName: LetterQuest.Gameplay.Words.Manager.WordManager,
-          Assembly-CSharp
+      - m_Target: {fileID: 8614376310332863601}
+        m_TargetAssemblyTypeName: LetterQuest.Gameplay.Data.GeneralSettings, Assembly-CSharp
         m_MethodName: ToggleGeneralSettings
         m_Mode: 1
         m_Arguments:
@@ -529,7 +528,7 @@ MonoBehaviour:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LetterQuest.Gameplay.Letters.Manager.LetterManager,
           Assembly-CSharp
-        m_MethodName: PickLetterArrangement
+        m_MethodName: SetArrangement
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1354988810427900702}
@@ -683,6 +682,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1026356579103019158}
+  - component: {fileID: 8614376310332863601}
   - component: {fileID: 2275310501289567406}
   - component: {fileID: 8870100303860503662}
   - component: {fileID: 1516483578313724767}
@@ -714,6 +714,18 @@ RectTransform:
   m_AnchoredPosition: {x: 197.9, y: 185.8}
   m_SizeDelta: {x: 300, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8614376310332863601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2282695813122424362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0990062974e043f29887cfd1e2eeb14b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &2275310501289567406
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1138,9 +1150,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3285521343843130035}
-        m_TargetAssemblyTypeName: LetterQuest.Gameplay.Words.Manager.WordManager,
-          Assembly-CSharp
+      - m_Target: {fileID: 7915189471097384846}
+        m_TargetAssemblyTypeName: LetterQuest.Framework.Audio.AudioSettings, Assembly-CSharp
         m_MethodName: MusicVolumeChanged
         m_Mode: 0
         m_Arguments:
@@ -1151,6 +1162,81 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &2714056140063470885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1862702345630636735}
+  - component: {fileID: 413303875557134579}
+  - component: {fileID: 7613086192806473908}
+  m_Layer: 5
+  m_Name: AAF Logo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1862702345630636735
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2714056140063470885}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6558358359001176994}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -160, y: 112}
+  m_SizeDelta: {x: 320, y: 224}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &413303875557134579
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2714056140063470885}
+  m_CullTransparentMesh: 1
+--- !u!114 &7613086192806473908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2714056140063470885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 2aa5919f2101d9647b8a79380e039576, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2770523469921620823
 GameObject:
   m_ObjectHideFlags: 0
@@ -1316,9 +1402,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3285521343843130035}
-        m_TargetAssemblyTypeName: LetterQuest.Gameplay.Words.Manager.WordManager,
-          Assembly-CSharp
+      - m_Target: {fileID: 7915189471097384846}
+        m_TargetAssemblyTypeName: LetterQuest.Framework.Audio.AudioSettings, Assembly-CSharp
         m_MethodName: SfxVolumeChanged
         m_Mode: 0
         m_Arguments:
@@ -1466,7 +1551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.9019608, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -2464,24 +2549,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxWordCount: 20
   currentWordText: {fileID: 332858344494787295}
-  currentWordData: {fileID: 11400000, guid: b34f71084224e5b4fb1b56f2c2656147, type: 2}
-  gameDifficulty: {fileID: 11400000, guid: a917899ca9bb98343944af4d137189fc, type: 2}
   animatorHook: {fileID: 126981307859724469}
-  generalSettingsGroup: {fileID: 1516483578313724767}
-  audioSettingsGroup: {fileID: 4918432794435590727}
-  <LetterSlotHandler>k__BackingField:
-    letterSlots:
-    - {fileID: 6531416031364072703}
-    - {fileID: 5359753734050609031}
-    - {fileID: 7933911287450963463}
-    - {fileID: 4662625102485539482}
-    - {fileID: 4268647905272697574}
-    - {fileID: 1143639075051127617}
-    - {fileID: 1923136017240158977}
-    - {fileID: 8460843600776197981}
-    - {fileID: 5488321453846310688}
-    - {fileID: 3996347099365262392}
-  <ProgressBar>k__BackingField:
+  gameDifficulty: {fileID: 11400000, guid: a917899ca9bb98343944af4d137189fc, type: 2}
+  playerMetrics: {fileID: 11400000, guid: 9380911812651a24ca6059439e2d53d4, type: 2}
+  eventBus: {fileID: 11400000, guid: fee95f1a2a2addf4d812ac134e238920, type: 2}
+  <WordsProgressBar>k__BackingField:
     currentWordCountText: {fileID: 3857475258610088639}
     progressBar: {fileID: 6245604295301991905}
 --- !u!1 &5904557399341652180
@@ -2606,10 +2678,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2233758189073471711}
-        m_TargetAssemblyTypeName: LetterQuest.ScreenTransition, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 1
+      - m_Target: {fileID: 7865046116919414141}
+        m_TargetAssemblyTypeName: LetterQuest.Framework.Audio.AudioOneShot, Assembly-CSharp
+        m_MethodName: PlayOneShot
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2618,9 +2690,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 7865046116919414141}
-        m_TargetAssemblyTypeName: LetterQuest.Framework.Audio.ButtonClickAudio, Assembly-CSharp
-        m_MethodName: PlayUiAudio
+      - m_Target: {fileID: 2233758189073471711}
+        m_TargetAssemblyTypeName: LetterQuest.ScreenTransition, Assembly-CSharp
+        m_MethodName: LoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3269,7 +3341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5019608, g: 0.1254902, b: 0.5019608, a: 1}
+  m_Color: {r: 0.9607844, g: 0.5411765, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -3319,6 +3391,7 @@ RectTransform:
   m_Children:
   - {fileID: 669628503927924062}
   - {fileID: 1318548668367185644}
+  - {fileID: 1862702345630636735}
   m_Father: {fileID: 3689245040548591099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3497,7 +3570,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -128, y: 64}
+  m_AnchoredPosition: {x: -432, y: 60}
   m_SizeDelta: {x: 160, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7883045591083272485
@@ -3582,11 +3655,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3285521343843130035}
-        m_TargetAssemblyTypeName: LetterQuest.Gameplay.Words.Manager.WordManager,
-          Assembly-CSharp
-        m_MethodName: SkipWord
-        m_Mode: 1
+      - m_Target: {fileID: 7865046116919414141}
+        m_TargetAssemblyTypeName: LetterQuest.Framework.Audio.AudioOneShot, Assembly-CSharp
+        m_MethodName: PlayOneShot
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3595,9 +3667,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 7865046116919414141}
-        m_TargetAssemblyTypeName: LetterQuest.Framework.Audio.ButtonClickAudio, Assembly-CSharp
-        m_MethodName: PlayUiAudio
+      - m_Target: {fileID: 3285521343843130035}
+        m_TargetAssemblyTypeName: LetterQuest.Gameplay.Words.Manager.WordManager,
+          Assembly-CSharp
+        m_MethodName: SkipWord
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3642,8 +3715,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 160}
-  m_SizeDelta: {x: 1200, y: 128}
+  m_AnchoredPosition: {x: 0, y: 169}
+  m_SizeDelta: {x: 832, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7033423149371482909
 CanvasRenderer:
@@ -3700,15 +3773,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 128
+  m_fontSize: 114.55
   m_fontSizeBase: 128
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 100
+  m_fontSizeMax: 200
   m_fontStyle: 33
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 1024
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -4308,9 +4381,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7865046116919414141}
-        m_TargetAssemblyTypeName: LetterQuest.Framework.Audio.ButtonClickAudio, Assembly-CSharp
-        m_MethodName: PlayUiAudio
-        m_Mode: 1
+        m_TargetAssemblyTypeName: LetterQuest.Framework.Audio.AudioOneShot, Assembly-CSharp
+        m_MethodName: PlayOneShot
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4319,9 +4392,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3285521343843130035}
-        m_TargetAssemblyTypeName: LetterQuest.Gameplay.Words.Manager.WordManager,
-          Assembly-CSharp
+      - m_Target: {fileID: 7915189471097384846}
+        m_TargetAssemblyTypeName: LetterQuest.Framework.Audio.AudioSettings, Assembly-CSharp
         m_MethodName: ToggleAudioSettings
         m_Mode: 1
         m_Arguments:
@@ -4341,6 +4413,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5822687514394036453}
+  - component: {fileID: 4009344465580384189}
   - component: {fileID: 6812310196732905278}
   m_Layer: 5
   m_Name: Letter Slot View Port
@@ -4378,6 +4451,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4009344465580384189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8191298326066633017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32c0cd4b716144cfa3c6dd58b6d2bc49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  letterSlotUis:
+  - {fileID: 6531416031364072703}
+  - {fileID: 5359753734050609031}
+  - {fileID: 7933911287450963463}
+  - {fileID: 4662625102485539482}
+  - {fileID: 4268647905272697574}
+  - {fileID: 1143639075051127617}
+  - {fileID: 1923136017240158977}
+  - {fileID: 8460843600776197981}
+  - {fileID: 5488321453846310688}
+  - {fileID: 3996347099365262392}
 --- !u!114 &6812310196732905278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4521,6 +4617,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543051553413546190}
+  - component: {fileID: 7915189471097384846}
   - component: {fileID: 4197834849863633725}
   - component: {fileID: 5066595337017485225}
   - component: {fileID: 4918432794435590727}
@@ -4554,6 +4651,18 @@ RectTransform:
   m_AnchoredPosition: {x: 430.9, y: 85}
   m_SizeDelta: {x: 160, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7915189471097384846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8345133141124591699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8127c28fe40a4dbf8bb7ac870420677f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &4197834849863633725
 CanvasRenderer:
   m_ObjectHideFlags: 0
