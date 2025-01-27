@@ -1,18 +1,20 @@
 ﻿
 using UnityEngine;
-using LetterQuest.Gameplay.Data;
 using LetterQuest.Gameplay.Input;
 using System.Collections.Generic;
+using LetterQuest.Gameplay.Settings;
+using LetterQuest.Gameplay.Words.Data;
 using LetterQuest.Gameplay.Letters.Data;
 
 namespace LetterQuest.Gameplay.Letters
 {
     [System.Serializable]
-    public class LetterBlockPlacer
+    public class LetterBlockHandler
     {
-        [SerializeField] private LetterPositioningMode mode = LetterPositioningMode.Alphabet;
+        [SerializeField] private LetterPositioningMode mode = LetterPositioningMode.Easy;
         [SerializeField] private LetterPositioning letterPositions;
         [SerializeField] private GameDifficulty gameDifficulty;
+        [SerializeField] private WordContainer wordContainer;
         private readonly List<LetterBlock> _letterList = new();
         private const int MaxLetters = 26;
         private LetterObjectPool _letterObjPool;
@@ -20,9 +22,9 @@ namespace LetterQuest.Gameplay.Letters
 
         #region Public Methods
 
-        public void Initialize(LetterObjectPool letterObjectPool)
+        public void Initialize(GameObject parent)
         {
-            _letterObjPool = letterObjectPool;
+            _letterObjPool = parent.GetComponent<LetterObjectPool>();
             SetArrangementMode();
         }
 
@@ -41,14 +43,11 @@ namespace LetterQuest.Gameplay.Letters
             _letterList?.Clear();
         }
 
-        public LetterBlock ReleaseBlock()
+        public void UpdateBlockArrangement(int change = 0)
         {
-            for (var i = 0; i < _letterList.Count; i++)
-            {
-                if (_letterList[i].IsDetectable) continue;
-                _letterList[i].EnableCollision();
-            }
-            return _grabbedLetter;
+            RemoveLetterBlocks();
+            SetArrangementMode(change);
+            PlaceLetterBlocks();
         }
 
         public void GrabBlock(LetterBlock letterBlock)
@@ -59,17 +58,23 @@ namespace LetterQuest.Gameplay.Letters
                 if (ReferenceEquals(_letterList[i], _grabbedLetter)) continue;
                 _letterList[i].DisableCollision();
             }
+
             _grabbedLetter.OnDragStart();
         }
 
-        public void UpdateBlockArrangement(string word, int change = 0)
+        public LetterBlock ReleaseBlock()
         {
-            RemoveLetters();
-            SetArrangementMode(change);
-            PlaceLetters(word);
+            for (var i = 0; i < _letterList.Count; i++)
+            {
+                if (_letterList[i].IsDetectable) continue;
+                _letterList[i].EnableCollision();
+            }
+
+            return _grabbedLetter;
         }
 
-        public void PlaceLetters(string word)
+
+        public void PlaceLetterBlocks()
         {
             switch (mode)
             {
@@ -77,15 +82,15 @@ namespace LetterQuest.Gameplay.Letters
                     PlaceLettersAlphabetically();
                     break;
                 case LetterPositioningMode.Qwerty:
-                    PlaceLetters(letterPositions.GetQwertyIndicies());
+                    PlaceLetterBlocks(letterPositions.GetQwertyIndicies());
                     break;
                 default:
-                    PlaceLetters(letterPositions.GetRandomIndicies(word));
+                    PlaceLetterBlocks(letterPositions.GetRandomIndicies(wordContainer.GetWord()));
                     break;
             }
         }
 
-        public void RemoveLetters()
+        public void RemoveLetterBlocks()
         {
             if (ReferenceEquals(_letterList, null)) return;
             if (_letterList.Count <= 0) return;
@@ -105,18 +110,12 @@ namespace LetterQuest.Gameplay.Letters
 
         private void SetArrangementMode(int change = 0)
         {
-            switch (change)
+            mode = change switch
             {
-                case 0:
-                    mode = (LetterPositioningMode)gameDifficulty.Value;
-                    break;
-                case 1:
-                    mode = LetterPositioningMode.Alphabet;
-                    break;
-                default:
-                    mode = LetterPositioningMode.Qwerty;
-                    break;
-            }
+                0 => (LetterPositioningMode)gameDifficulty.Value,
+                1 => LetterPositioningMode.Alphabet,
+                _ => LetterPositioningMode.Qwerty
+            };
         }
 
         private void PlaceLettersAlphabetically()
@@ -132,7 +131,7 @@ namespace LetterQuest.Gameplay.Letters
             }
         }
 
-        private void PlaceLetters(int[] asciiArray)
+        private void PlaceLetterBlocks(int[] asciiArray)
         {
             for (var i = 0; i < asciiArray.Length; i++)
             {

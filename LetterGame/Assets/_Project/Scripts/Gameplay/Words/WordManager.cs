@@ -1,30 +1,24 @@
 ﻿
-using TMPro;
 using UnityEngine;
-using LetterQuest.Gameplay.Data;
 using LetterQuest.Gameplay.Events;
-using UnityEngine.SceneManagement;
+using LetterQuest.Framework.Scenes;
 using LetterQuest.Gameplay.Metrics;
+using LetterQuest.Gameplay.Settings;
 using LetterQuest.Gameplay.Words.Ui;
-using LetterQuest.Gameplay.Animation;
 using LetterQuest.Gameplay.Words.Data;
 
 namespace LetterQuest.Gameplay.Words.Manager
 {
     public class WordManager : MonoBehaviour
     {
-        [SerializeField] private int maxWordCount = 20;
-
         [Header("References")]
-        [SerializeField] private TMP_Text currentWordText;
-        [SerializeField] private AnimatorHook animatorHook;
         [SerializeField] private GameDifficulty gameDifficulty;
         [SerializeField] private PlayerMetrics playerMetrics;
+        [SerializeField] private WordContainer wordContainer;
         [SerializeField] private EventBus eventBus;
-        [field: SerializeField] private WordsProgressBar WordsProgressBar { get; set; }
 
-        private const string MetricsSceneName = "PlayerMetrics";
         private const string GameOverText = "Game Over!";
+        private WordsProgressBar _wordsProgressBar;
         private WordGenerator _wordGenerator;
         private const float Timer = 3f;
         private float _startTime;
@@ -33,8 +27,8 @@ namespace LetterQuest.Gameplay.Words.Manager
 
         public void Start()
         {
+            _wordsProgressBar = FindFirstObjectByType<WordsProgressBar>();
             _wordGenerator = new WordGenerator(gameDifficulty.Value);
-            WordsProgressBar.Initialize(new WordTrackingData(0, maxWordCount));
             eventBus.WordCompleteEvent += OnWordComplete;
             playerMetrics.StartLevel();
             AssignNextWord();
@@ -43,8 +37,6 @@ namespace LetterQuest.Gameplay.Words.Manager
         public void OnDisable()
         {
             eventBus.WordCompleteEvent -= OnWordComplete;
-            WordsProgressBar.Dispose();
-            if (ReferenceEquals(_wordGenerator, null)) return;
             _wordGenerator.Dispose();
             _wordGenerator = null;
         }
@@ -56,7 +48,6 @@ namespace LetterQuest.Gameplay.Words.Manager
         public void SkipWord()
         {
             playerMetrics.SimpleMetrics.IncrementSkips();
-            WordsProgressBar.WordCountTick();
             eventBus.OnWordReset();
             AssignNextWord();
         }
@@ -67,32 +58,30 @@ namespace LetterQuest.Gameplay.Words.Manager
 
         private void OnWordComplete()
         {
-            animatorHook.Play();
             eventBus.OnWordReset();
-            WordsProgressBar.WordCountTick();
+            wordContainer.PlayWordAnimation();
             playerMetrics.AdvancedMetrics.AddWordTime(_startTime);
             Invoke(nameof(AssignNextWord), Timer);
         }
 
         private void AssignNextWord()
         {
+            if (_wordsProgressBar.GetProgress() >= 1f)
+            {
+                wordContainer.SetWord(GameOverText, true);
+                Invoke(nameof(GameOver), Timer);
+                return;
+            }
+
             _startTime = Time.realtimeSinceStartup;
-            if (WordsProgressBar.GetProgress() >= 1f)
-            {
-                currentWordText.text = GameOverText;
-                Invoke(nameof(EndLevel), Timer);
-            }
-            else
-            {
-                currentWordText.text = _wordGenerator.GetNextWord();
-                eventBus.OnWordSet(currentWordText.text.ToUpper());
-            }
+            wordContainer.SetWord(_wordGenerator.GetNextWord());
+            eventBus.OnWordSet();
         }
 
-        private void EndLevel()
+        private void GameOver()
         {
             playerMetrics.EndLevel();
-            SceneManager.LoadScene(MetricsSceneName, LoadSceneMode.Single);
+            GetComponent<SceneTransition>().LoadScene();
         }
 
         #endregion

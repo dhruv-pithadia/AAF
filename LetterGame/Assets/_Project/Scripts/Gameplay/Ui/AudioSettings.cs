@@ -2,7 +2,7 @@
 using LetterQuest.Framework.Ui;
 using LetterQuest.Framework.Audio;
 
-namespace LetterQuest.Gameplay.Data
+namespace LetterQuest.Gameplay.Ui
 {
     public class AudioSettings : CanvasGroupHandler
     {

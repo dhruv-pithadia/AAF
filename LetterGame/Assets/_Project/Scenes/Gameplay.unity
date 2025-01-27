@@ -474,18 +474,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025cc0fa7b46aa541aba29d28d35ac09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1501800958 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1349471062293871306, guid: 340b37125bff23b48a8ea47143e0752d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1935752566028145869}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18af2e78853258d4a9d869d62411385e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1679168102
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,127 +562,6 @@ MonoBehaviour:
   m_PointerBehavior: 1
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 4
---- !u!1 &2034035074
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2034035075}
-  - component: {fileID: 2034035076}
-  m_Layer: 0
-  m_Name: SoftContact
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2034035075
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2034035074}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.28107804, y: -6.6742477, z: 7.1778884}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1234652846961998410}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2034035076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2034035074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 865fab10961c2ff41af47a34e34f43a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  physicalHandsManager: {fileID: 1234652846961998411}
-  _physicsMaterial: {fileID: 0}
---- !u!4 &1234652846961998410
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5481279276068143934}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.28107804, y: 6.6742477, z: -7.1778884}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2034035075}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1234652846961998411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5481279276068143934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d69077fd953cb86488e8a7b2090e7754, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  editTimePose: 1
-  _inputProvider: {fileID: 1077124144}
-  _contactMode: 1
-  _hoverDistance: 0
-  _contactDistance: 0.005
-  onHover:
-    m_PersistentCalls:
-      m_Calls: []
-  onHoverExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onContact:
-    m_PersistentCalls:
-      m_Calls: []
-  onContactExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onGrab:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1501800958}
-        m_TargetAssemblyTypeName: LetterQuest.GrabBehaviour, Assembly-CSharp
-        m_MethodName: OnGrabEnterEvent
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onGrabExit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1501800958}
-        m_TargetAssemblyTypeName: LetterQuest.GrabBehaviour, Assembly-CSharp
-        m_MethodName: OnGrabExitEvent
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1001 &1935752566028145869
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -713,11 +580,6 @@ PrefabInstance:
       propertyPath: leapProvider
       value: 
       objectReference: {fileID: 1077124144}
-    - target: {fileID: 1349471062293871306, guid: 340b37125bff23b48a8ea47143e0752d,
-        type: 3}
-      propertyPath: letterManager
-      value: 
-      objectReference: {fileID: 4973870460086050974}
     - target: {fileID: 4194031445926205090, guid: 340b37125bff23b48a8ea47143e0752d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -770,6 +632,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6137876721072950463, guid: 340b37125bff23b48a8ea47143e0752d,
         type: 3}
+      propertyPath: FineTuning
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6137876721072950463, guid: 340b37125bff23b48a8ea47143e0752d,
+        type: 3}
+      propertyPath: DebugOptions
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6137876721072950463, guid: 340b37125bff23b48a8ea47143e0752d,
+        type: 3}
       propertyPath: _leapProvider
       value: 
       objectReference: {fileID: 1077124144}
@@ -780,28 +652,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9158992986154753333, guid: 340b37125bff23b48a8ea47143e0752d,
         type: 3}
+      propertyPath: FineTuning
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9158992986154753333, guid: 340b37125bff23b48a8ea47143e0752d,
+        type: 3}
       propertyPath: _leapProvider
       value: 
       objectReference: {fileID: 1077124144}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1349471062293871306, guid: 340b37125bff23b48a8ea47143e0752d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 340b37125bff23b48a8ea47143e0752d, type: 3}
---- !u!114 &3154357539066809725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5481279276068143934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bd79d111731a5841886cf2a4736ff1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  physicalHandsManager: {fileID: 1234652846961998411}
-  useNonKinematicMovementOnly: 0
 --- !u!1001 &3740957531437510684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -870,6 +734,11 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4973870460086050974}
+    - target: {fileID: 1671162936708343294, guid: 8695f09be49034f469fc795c842f0cf6,
+        type: 3}
+      propertyPath: sceneToLoad
+      value: Splash
+      objectReference: {fileID: 0}
     - target: {fileID: 1722466335792060534, guid: 8695f09be49034f469fc795c842f0cf6,
         type: 3}
       propertyPath: m_Camera
@@ -1220,24 +1089,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2848307e3628a4fc58f13d0f9784a2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &5481279276068143934
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1234652846961998410}
-  - component: {fileID: 1234652846961998411}
-  - component: {fileID: 3154357539066809725}
-  m_Layer: 0
-  m_Name: Physical Hands Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1245,7 +1096,6 @@ SceneRoots:
   - {fileID: 922045688}
   - {fileID: 425131289}
   - {fileID: 654449587}
-  - {fileID: 1234652846961998410}
   - {fileID: 4973870460086050973}
   - {fileID: 3740957531437510684}
   - {fileID: 1935752566028145869}

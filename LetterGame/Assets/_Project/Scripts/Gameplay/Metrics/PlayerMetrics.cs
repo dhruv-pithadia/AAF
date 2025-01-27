@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace LetterQuest.Gameplay.Metrics
 {
-    [CreateAssetMenu(fileName = "Player Metrics", menuName = "LetterQuest/Player Metrics")]
+    [CreateAssetMenu(fileName = "PlayerMetrics", menuName = "LetterQuest/Player Metrics")]
     public class PlayerMetrics : ScriptableObject
     {
         public SimpleMetrics SimpleMetrics { get; private set; }

@@ -29,7 +29,7 @@ namespace LetterQuest.Framework.Scenes
 
         private void Load()
         {
-            SceneManager.LoadScene(sceneToLoad);
+            SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Single);
         }
 
         private void Quit()

@@ -3,7 +3,6 @@ using TMPro;
 using UnityEngine;
 using LetterQuest.Gameplay.Input;
 using LetterQuest.Gameplay.Events;
-using LetterQuest.Gameplay.Letters.Ui;
 
 namespace LetterQuest.Gameplay.Letters.Manager
 {
@@ -13,58 +12,56 @@ namespace LetterQuest.Gameplay.Letters.Manager
         [Header("References")]
         [SerializeField] private EventBus eventBus;
         [SerializeField] private InputDetection inputDetection;
-        
-        [field: SerializeField] private LetterBlockPlacer BlockPlacer { get; set; }
         [field: SerializeField] private LetterSlotHandler SlotHandler { get; set; }
-        private string _currentWord;
+        [field: SerializeField] private LetterBlockHandler BlockHandler { get; set; }
 
         #region Unity Methods
 
         private void Start()
         {
-            eventBus.WordSetEvent += OnWordSetEvent;
-            eventBus.WordResetEvent += OnWordCompleteEvent;
-            SlotHandler.Initialize(gameObject, eventBus, FindFirstObjectByType<LetterUiContainer>());
-            BlockPlacer.Initialize(GetComponent<LetterObjectPool>());
+            eventBus.WordSetEvent += OnWordSet;
+            eventBus.WordResetEvent += OnWordReset;
+            SlotHandler.Initialize(gameObject, eventBus);
             inputDetection.Initialize(Camera.main);
+            BlockHandler.Initialize(gameObject);
         }
 
         private void LateUpdate()
         {
-            BlockPlacer.Tick();
+            BlockHandler.Tick();
         }
 
         private void OnDisable()
         {
             SlotHandler.Dispose();
-            BlockPlacer.Dispose();
+            BlockHandler.Dispose();
             inputDetection.Dispose();
-            eventBus.WordSetEvent -= OnWordSetEvent;
-            eventBus.WordCompleteEvent -= OnWordCompleteEvent;
+            eventBus.WordSetEvent -= OnWordSet;
+            eventBus.WordResetEvent -= OnWordReset;
         }
 
         #endregion
 
         #region Public Methods
 
-        public void SetArrangement(TMP_Dropdown change) => BlockPlacer.UpdateBlockArrangement(_currentWord, change.value);
-        public void OnLetterGrabbed(LetterBlock block) => BlockPlacer.GrabBlock(block);
-        public LetterBlock OnLetterReleased() => BlockPlacer.ReleaseBlock();
+        public void SetLetterArrangement(TMP_Dropdown change) => BlockHandler.UpdateBlockArrangement(change.value);
+        public void OnLetterGrabbed(LetterBlock block) => BlockHandler.GrabBlock(block);
+        public LetterBlock OnLetterReleased() => BlockHandler.ReleaseBlock();
 
         #endregion
 
         #region Private Methods
-        
-        private void OnWordSetEvent(string word)
+
+        private void OnWordSet()
         {
-            BlockPlacer.PlaceLetters(word);
-            _currentWord = word;
+            SlotHandler.PlaceUiSlots();
+            BlockHandler.PlaceLetterBlocks();
         }
 
-        private void OnWordCompleteEvent()
+        private void OnWordReset()
         {
-            SlotHandler.ResetAllSlots();
-            BlockPlacer.RemoveLetters();
+            BlockHandler.RemoveLetterBlocks();
+            SlotHandler.ResetUiSlots();
         }
 
         #endregion

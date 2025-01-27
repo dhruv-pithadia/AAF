@@ -18,7 +18,7 @@ namespace LetterQuest.Gameplay.Metrics
         [SerializeField] private TMP_Text averageGrabTime;
         [SerializeField] private TMP_Text averageLetterPlacementTime;
         [SerializeField] private TMP_Text averageWordCompletionTime;
-
+        
         private void Start()
         {
             AppendStatsText();

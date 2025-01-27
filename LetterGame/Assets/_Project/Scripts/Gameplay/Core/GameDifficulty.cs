@@ -1,9 +1,9 @@
 ﻿
 using UnityEngine;
 
-namespace LetterQuest.Gameplay.Data
+namespace LetterQuest.Gameplay.Settings
 {
-    [CreateAssetMenu(fileName = "Game Difficulty", menuName = "LetterQuest/Game Difficulty")]
+    [CreateAssetMenu(fileName = "GameDifficulty", menuName = "LetterQuest/Game Difficulty")]
     public class GameDifficulty : ScriptableObject
     {
         [field: SerializeField] public int Value { get; private set; }

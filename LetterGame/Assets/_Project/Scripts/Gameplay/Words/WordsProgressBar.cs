@@ -2,46 +2,36 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using LetterQuest.Gameplay.Words.Data;
 
 namespace LetterQuest.Gameplay.Words.Ui
 {
-    [System.Serializable]
-    public class WordsProgressBar
+    public class WordsProgressBar : MonoBehaviour
     {
+        [SerializeField] private int maxWordCount = 20;
         [SerializeField] private TMP_Text currentWordCountText;
         [SerializeField] private Image progressBar;
-        private WordTrackingData _data;
+        private int _currentWordCount = -1;
 
         #region Public Methods
 
-        public void Initialize(WordTrackingData data)
+        public float GetProgress()
         {
-            _data = data;
             OnDataUpdate();
+            return GetPercent;
         }
-
-        public void Dispose()
-        {
-            _data = null;
-        }
-
-        public void WordCountTick()
-        {
-            _data.Tick();
-            OnDataUpdate();
-        }
-
-        public float GetProgress() => _data.GetPercent;
 
         #endregion
 
         #region Private Methods
 
+        private string GetText() => $"{_currentWordCount} / {maxWordCount}";
+        private float GetPercent => _currentWordCount / (float)maxWordCount;
+
         private void OnDataUpdate()
         {
-            progressBar.fillAmount = _data.GetPercent;
-            currentWordCountText.text = _data.GetText();
+            _currentWordCount++;
+            progressBar.fillAmount = GetPercent;
+            currentWordCountText.text = GetText();
         }
 
         #endregion

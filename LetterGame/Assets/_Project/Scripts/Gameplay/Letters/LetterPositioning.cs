@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace LetterQuest.Gameplay.Letters.Data
 {
-    [CreateAssetMenu(fileName = "Letter Positioning", menuName = "LetterQuest/Letter Positioning")]
+    [CreateAssetMenu(fileName = "LetterPositioning", menuName = "LetterQuest/Letter Positioning")]
     public class LetterPositioning : ScriptableObject
     {
         public List<Vector3> alphabetPositions = new();

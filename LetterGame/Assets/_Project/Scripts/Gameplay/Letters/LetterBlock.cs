@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using LetterQuest.Gameplay.Core;
 using System.Collections.Generic;
 using LetterQuest.Gameplay.Input;
 using LetterQuest.Gameplay.Animation;
@@ -19,7 +20,10 @@ namespace LetterQuest.Gameplay.Letters
         private BoxCollider _boxCollider;
         private TMP_Text _letterText;
         private Vector3 _originalPos;
+        private HandDetection _holder;
+        private float _timer;
         private int _asciiCode;
+        private bool _isHeld;
 
         #region Unity Methods
 
@@ -30,6 +34,12 @@ namespace LetterQuest.Gameplay.Letters
             _boxCollider = GetComponent<BoxCollider>();
             _animatorHook = GetComponent<AnimatorHook>();
             _letterText = GetComponentInChildren<TMP_Text>();
+        }
+
+        private void Update()
+        {
+            if (_isHeld == false) return;
+            MoveLetter(_holder.GrabPoint());
         }
 
         #endregion
@@ -56,18 +66,31 @@ namespace LetterQuest.Gameplay.Letters
             MoveLetter(Vector3.zero);
         }
 
+        public void OnHeldStart(HandDetection holder)
+        {
+            _holder = holder;
+            _isHeld = true;
+        }
+
+        public void OnHeldEnd()
+        {
+            _isHeld = false;
+            _holder = null;
+        }
+
         public void OnDragStart()
         {
             meshRenderer.enabled = false;
             _animatorHook.Play(true);
         }
 
-        public bool OnDragEnd(Vector3 position)
+        public bool OnDragEnd()
         {
             _animatorHook.Play(false);
             meshRenderer.enabled = true;
+            var result = AssignLetterToUiSlot(InputDetection.GetHandOverUi(_letterTransform.position));
             _letterTransform.SetPositionAndRotation(_originalPos, Quaternion.identity);
-            return AssignLetterToUiSlot(InputDetection.GetHandOverUi(position));
+            return result;
         }
 
         #endregion

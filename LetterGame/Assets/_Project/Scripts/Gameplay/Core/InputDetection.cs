@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace LetterQuest.Gameplay.Input
 {
-    [CreateAssetMenu(menuName = "LetterQuest/InputDetection", fileName = "InputDetection")]
+    [CreateAssetMenu(fileName = "InputDetection", menuName = "LetterQuest/Input Detection")]
     public class InputDetection : ScriptableObject, InputActions.IUIActions
     {
         private InputActions _inputActions;
@@ -41,6 +41,20 @@ namespace LetterQuest.Gameplay.Input
             result.z = -_camera.transform.position.z;
             result = _camera.ScreenToWorldPoint(result);
             return result;
+        }
+
+        public static bool IsOverUiSlot(Vector3 position)
+        {
+            var results = GetHandOverUi(position);
+            if (results.Count <= 0) return false;
+
+            for (int i = 0; i < results.Count; i++)
+            {
+                if (results[i].gameObject.layer != LayerMask.NameToLayer("LetterSlot")) continue;
+                return true;
+            }
+
+            return false;
         }
 
         public static List<RaycastResult> GetHandOverUi(Vector3 position)

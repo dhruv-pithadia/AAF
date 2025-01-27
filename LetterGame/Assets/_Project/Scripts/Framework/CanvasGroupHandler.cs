@@ -13,20 +13,30 @@ namespace LetterQuest.Framework.Ui
             _canvasGroup = GetComponent<CanvasGroup>();
         }
 
-        protected void ToggleUi()
+        public void ToggleUi()
         {
             if (_canvasGroup.alpha == 1f)
             {
-                _canvasGroup.alpha = 0f;
-                _canvasGroup.blocksRaycasts = false;
-                _canvasGroup.interactable = false;
+                HideUi();
             }
             else
             {
-                _canvasGroup.alpha = 1f;
-                _canvasGroup.blocksRaycasts = true;
-                _canvasGroup.interactable = true;
+                ShowUi();
             }
+        }
+
+        protected void HideUi()
+        {
+            _canvasGroup.alpha = 0f;
+            _canvasGroup.blocksRaycasts = false;
+            _canvasGroup.interactable = false;
+        }
+
+        protected void ShowUi()
+        {
+            _canvasGroup.alpha = 1f;
+            _canvasGroup.blocksRaycasts = true;
+            _canvasGroup.interactable = true;
         }
     }
 }

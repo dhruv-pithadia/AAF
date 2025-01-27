@@ -1,7 +1,7 @@
 ﻿
 using LetterQuest.Framework.Ui;
 
-namespace LetterQuest.Gameplay.Data
+namespace LetterQuest.Gameplay.Ui
 {
     public class GeneralSettings : CanvasGroupHandler
     {

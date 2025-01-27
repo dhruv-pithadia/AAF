@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 062e11bbde7c4449da2abe0af72f6553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grabMethod: {fileID: 11400000, guid: 2ac01125c8df3504c8c5965a8300471a, type: 2}
   meshRenderer: {fileID: 6767224799148184931}
   canvas: {fileID: 3199424465202642366}
 --- !u!114 &3021269131354186268

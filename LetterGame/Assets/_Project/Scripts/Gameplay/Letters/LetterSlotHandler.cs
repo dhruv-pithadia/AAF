@@ -3,6 +3,7 @@ using UnityEngine;
 using LetterQuest.Framework.Audio;
 using LetterQuest.Gameplay.Events;
 using LetterQuest.Gameplay.Metrics;
+using LetterQuest.Gameplay.Words.Data;
 using LetterQuest.Gameplay.Letters.Ui;
 
 namespace LetterQuest.Gameplay.Letters
@@ -11,20 +12,19 @@ namespace LetterQuest.Gameplay.Letters
     public class LetterSlotHandler
     {
         [SerializeField] private PlayerMetrics playerMetrics;
+        [SerializeField] private WordContainer wordContainer;
         private LetterSlotUi[] _letterSlots;
         private AudioOneShot _audioOneShot;
         private EventBus _eventBus;
         private float _startTime;
-        private char[] _currentWord;
 
         #region Public Methods
 
-        public void Initialize(GameObject parent, EventBus bus, LetterUiContainer container)
+        public void Initialize(GameObject parent, EventBus bus)
         {
             _eventBus = bus;
-            _letterSlots = container.GetLetterSlots();
+            _letterSlots = Object.FindFirstObjectByType<LetterUiContainer>().GetLetterSlots();
             _audioOneShot = parent.AddComponent<AudioOneShot>();
-            _eventBus.WordSetEvent += OnNewWord;
             for (var i = 0; i < _letterSlots.Length; i++)
             {
                 _letterSlots[i].LetterSlotUpdateEvent += OnLetterSlotUpdate;
@@ -33,14 +33,20 @@ namespace LetterQuest.Gameplay.Letters
 
         public void Dispose()
         {
-            _eventBus.WordSetEvent -= OnNewWord;
             for (var i = 0; i < _letterSlots.Length; i++)
             {
                 _letterSlots[i].LetterSlotUpdateEvent -= OnLetterSlotUpdate;
             }
         }
 
-        public void ResetAllSlots()
+        public void PlaceUiSlots()
+        {
+            _startTime = Time.realtimeSinceStartup;
+            TurnOffAllSlots();
+            TurnOnSlots(wordContainer.GetWordLength());
+        }
+
+        public void ResetUiSlots()
         {
             for (var i = 0; i < _letterSlots.Length; i++)
             {
@@ -53,23 +59,14 @@ namespace LetterQuest.Gameplay.Letters
 
         #region Private Methods
 
-        private void AssignCurrentWord(string word) => _currentWord = word.ToCharArray();
-        private bool DoesLetterMatchAtIndex(int i) => _currentWord[i] == _letterSlots[i].GetLetter();
-
-        private void OnNewWord(string word)
-        {
-            _startTime = Time.realtimeSinceStartup;
-            TurnOffAllSlots();
-            AssignCurrentWord(word);
-            TurnOnSlots(_currentWord.Length);
-        }
+        private bool DoesLetterMatchAtIndex(int i, char l) => wordContainer.DoesLetterMatch(i, l);
 
         private void OnLetterSlotUpdate(int slotIndex)
         {
-            var isMatch = DoesLetterMatchAtIndex(slotIndex);
+            var isMatch = DoesLetterMatchAtIndex(slotIndex, _letterSlots[slotIndex].GetLetter());
             if (isMatch == false) playerMetrics.SimpleMetrics.IncrementInvalidPlacements();
 
-            if (IsWordSpelledCorrect() == false)
+            if (IsWordSpelledCorrect(wordContainer.GetWordLength()) == false)
             {
                 _letterSlots[slotIndex].SetBlinkAnimation(isMatch == false);
                 _audioOneShot.PlayOneShot(isMatch ? 2 : 1);
@@ -85,12 +82,12 @@ namespace LetterQuest.Gameplay.Letters
             _startTime = Time.realtimeSinceStartup;
         }
 
-        private bool IsWordSpelledCorrect()
+        private bool IsWordSpelledCorrect(int length)
         {
             var result = true;
-            for (var i = 0; i < _currentWord.Length; i++)
+            for (var i = 0; i < length; i++)
             {
-                if (DoesLetterMatchAtIndex(i))
+                if (DoesLetterMatchAtIndex(i, _letterSlots[i].GetLetter()))
                 {
                     _letterSlots[i].AssignSlotBorderColor(Color.green);
                 }
