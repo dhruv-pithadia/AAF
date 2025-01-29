@@ -19,11 +19,18 @@ namespace LetterQuest.Gameplay.Letters.Manager
 
         private void Start()
         {
+            eventBus.BreakEvent += OnBreak;
             eventBus.WordSetEvent += OnWordSet;
             eventBus.WordResetEvent += OnWordReset;
             SlotHandler.Initialize(gameObject, eventBus);
             inputDetection.Initialize(Camera.main);
             BlockHandler.Initialize(gameObject);
+        }
+
+        private void OnBreak(bool toggle)
+        {
+            if (toggle) Pause();
+            else Resume();
         }
 
         private void LateUpdate()
@@ -62,6 +69,16 @@ namespace LetterQuest.Gameplay.Letters.Manager
         {
             BlockHandler.RemoveLetterBlocks();
             SlotHandler.ResetUiSlots();
+        }
+        
+        private void Pause()
+        {
+            SlotHandler.StartBreak();
+        }
+        
+        private void Resume()
+        {
+            SlotHandler.EndBreak();
         }
 
         #endregion

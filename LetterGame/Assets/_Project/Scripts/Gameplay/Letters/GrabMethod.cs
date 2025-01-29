@@ -8,9 +8,9 @@ namespace LetterQuest.Gameplay.Letters
     [CreateAssetMenu(fileName = "GrabMethod", menuName = "LetterQuest/Grab Method")]
     public class GrabMethod : ScriptableObject
     {
-        [SerializeField] private PlayerMetrics playerMetrics;
         [field: SerializeField] public bool IsPointing { get; private set; }
         [field: SerializeField] public bool IsInUse { get; private set; } = false;
+        [SerializeField] private MetricsContainer metrics;
         private LetterManager _letterManager;
         private float _startTime;
         private int _attempts;
@@ -52,13 +52,13 @@ namespace LetterQuest.Gameplay.Letters
             IsInUse = false;
             if (_letterManager.OnLetterReleased().OnDragEnd())
             {
-                playerMetrics.AdvancedMetrics.AddGrabTime(_startTime);
-                if (_attempts == 1) playerMetrics.SimpleMetrics.IncrementSuccessfulGrabs();
+                metrics.Handler.AddGrabTime(_startTime);
+                if (_attempts == 1) metrics.Handler.IncrementCorrectGrabs();
                 _attempts = 0;
                 return;
             }
 
-            playerMetrics.SimpleMetrics.IncrementGrabFails();
+            metrics.Handler.IncrementGrabFails();
         }
     }
 }

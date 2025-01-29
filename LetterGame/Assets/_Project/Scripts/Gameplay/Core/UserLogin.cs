@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 
-namespace LetterQuest.Gameplay.Database
+namespace LetterQuest.Core.Login
 {
     [CreateAssetMenu(fileName = "UserLogin", menuName = "LetterQuest/User Login")]
     public class UserLogin : ScriptableObject
@@ -12,8 +12,7 @@ namespace LetterQuest.Gameplay.Database
         [SerializeField] private bool isLoggedIn;
         private const string PasswordFile = "password.txt";
         private const string GuestName = "guest";
-        private const string Footer = " ).json";
-        private const string Header = "( ";
+        private const string Extension = ".json";
         private StringBuilder _stringBuilder;
         private string _folderPath;
         private string _userName;
@@ -69,11 +68,12 @@ namespace LetterQuest.Gameplay.Database
         {
             _stringBuilder.Clear();
             var time = DateTime.Now;
-            _stringBuilder.Append(Header);
+            _stringBuilder.Append(_userName);
+            _stringBuilder.Append("_");
             _stringBuilder.Append(time.ToString("yyyy-MM-dd"));
             _stringBuilder.Append("_");
-            _stringBuilder.Append(time.ToString("HH:mm:ss"));
-            _stringBuilder.Append(Footer);
+            _stringBuilder.Append(time.ToString("HH;mm;ss"));
+            _stringBuilder.Append(Extension);
             return Path.Combine(_folderPath, _stringBuilder.ToString());
         }
 

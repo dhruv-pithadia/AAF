@@ -631,6 +631,7 @@ MonoBehaviour:
   _useInterpolation: 1
   _reconnectionAttempts: 5
   _reconnectionInterval: 180
+  _trackFiducialMarkers: 0
 --- !u!4 &1861952022
 Transform:
   m_ObjectHideFlags: 0

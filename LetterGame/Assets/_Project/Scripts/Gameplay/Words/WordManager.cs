@@ -13,8 +13,8 @@ namespace LetterQuest.Gameplay.Words.Manager
     {
         [Header("References")]
         [SerializeField] private GameDifficulty gameDifficulty;
-        [SerializeField] private PlayerMetrics playerMetrics;
         [SerializeField] private WordContainer wordContainer;
+        [SerializeField] private MetricsContainer metrics;
         [SerializeField] private EventBus eventBus;
 
         private const string GameOverText = "Game Over!";
@@ -22,6 +22,8 @@ namespace LetterQuest.Gameplay.Words.Manager
         private WordGenerator _wordGenerator;
         private const float Timer = 3f;
         private float _startTime;
+        private float _breakTime;
+        private bool _allowSkip;
 
         #region Unity Methods
 
@@ -30,8 +32,15 @@ namespace LetterQuest.Gameplay.Words.Manager
             _wordsProgressBar = FindFirstObjectByType<WordsProgressBar>();
             _wordGenerator = new WordGenerator(gameDifficulty.Value);
             eventBus.WordCompleteEvent += OnWordComplete;
-            playerMetrics.StartLevel();
+            eventBus.BreakEvent += OnBreak;
+            metrics.StartLevel();
             AssignNextWord();
+        }
+
+        private void OnBreak(bool toggle)
+        {
+            if (toggle) Pause();
+            else Resume();
         }
 
         public void OnDisable()
@@ -47,7 +56,8 @@ namespace LetterQuest.Gameplay.Words.Manager
 
         public void SkipWord()
         {
-            playerMetrics.SimpleMetrics.IncrementSkips();
+            if (_allowSkip == false) return;
+            metrics.Handler.IncrementSkips();
             eventBus.OnWordReset();
             AssignNextWord();
         }
@@ -55,12 +65,28 @@ namespace LetterQuest.Gameplay.Words.Manager
         #endregion
 
         #region Private Methods
+        
+        private void Pause()
+        {
+            _allowSkip = false;
+            _breakTime = Time.realtimeSinceStartup;
+            metrics.Handler.IncrementBreaks();
+        }
+
+        private void Resume()
+        {
+            var breakDuration = Time.realtimeSinceStartup - _breakTime;
+            metrics.EndBreak(breakDuration);
+            _startTime += breakDuration;
+            _allowSkip = true;
+        }
 
         private void OnWordComplete()
         {
+            _allowSkip = false;
             eventBus.OnWordReset();
             wordContainer.PlayWordAnimation();
-            playerMetrics.AdvancedMetrics.AddWordTime(_startTime);
+            metrics.Handler.AddWordTime(_startTime);
             Invoke(nameof(AssignNextWord), Timer);
         }
 
@@ -76,11 +102,12 @@ namespace LetterQuest.Gameplay.Words.Manager
             _startTime = Time.realtimeSinceStartup;
             wordContainer.SetWord(_wordGenerator.GetNextWord());
             eventBus.OnWordSet();
+            _allowSkip = true;
         }
 
         private void GameOver()
         {
-            playerMetrics.EndLevel();
+            metrics.EndLevel();
             GetComponent<SceneTransition>().LoadScene();
         }
 

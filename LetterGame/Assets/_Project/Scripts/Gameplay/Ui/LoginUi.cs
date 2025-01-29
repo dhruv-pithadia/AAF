@@ -1,9 +1,9 @@
 ﻿
 using TMPro;
 using UnityEngine;
+using LetterQuest.Core.Login;
 using LetterQuest.Framework.Ui;
 using LetterQuest.Gameplay.Events;
-using LetterQuest.Gameplay.Database;
 
 namespace LetterQuest.Gameplay.Ui
 {

@@ -11,12 +11,13 @@ namespace LetterQuest.Gameplay.Letters
     [System.Serializable]
     public class LetterSlotHandler
     {
-        [SerializeField] private PlayerMetrics playerMetrics;
         [SerializeField] private WordContainer wordContainer;
+        [SerializeField] private MetricsContainer metrics;
         private LetterSlotUi[] _letterSlots;
         private AudioOneShot _audioOneShot;
         private EventBus _eventBus;
         private float _startTime;
+        private float _breakTime;
 
         #region Public Methods
 
@@ -37,6 +38,16 @@ namespace LetterQuest.Gameplay.Letters
             {
                 _letterSlots[i].LetterSlotUpdateEvent -= OnLetterSlotUpdate;
             }
+        }
+
+        public void StartBreak()
+        {
+            _breakTime = Time.realtimeSinceStartup;
+        }
+
+        public void EndBreak()
+        {
+            _startTime += Time.realtimeSinceStartup - _breakTime;
         }
 
         public void PlaceUiSlots()
@@ -64,7 +75,7 @@ namespace LetterQuest.Gameplay.Letters
         private void OnLetterSlotUpdate(int slotIndex)
         {
             var isMatch = DoesLetterMatchAtIndex(slotIndex, _letterSlots[slotIndex].GetLetter());
-            if (isMatch == false) playerMetrics.SimpleMetrics.IncrementInvalidPlacements();
+            if (isMatch == false) metrics.Handler.IncrementInvalidLetters();
 
             if (IsWordSpelledCorrect(wordContainer.GetWordLength()) == false)
             {
@@ -78,7 +89,7 @@ namespace LetterQuest.Gameplay.Letters
                 _eventBus.OnWordCompleted();
             }
 
-            playerMetrics.AdvancedMetrics.AddLetterTime(_startTime);
+            metrics.Handler.AddLetterTime(_startTime);
             _startTime = Time.realtimeSinceStartup;
         }
 

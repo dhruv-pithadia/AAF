@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44aa921fed8744e687334da5a81fc638, type: 3}
-  m_Name: Player Metrics
+  m_Name: Metrics Container
   m_EditorClassIdentifier: 
