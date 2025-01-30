@@ -5,25 +5,25 @@ using LetterQuest.Gameplay.Letters.Manager;
 
 namespace LetterQuest.Gameplay.Letters
 {
-    [CreateAssetMenu(fileName = "GrabMethod", menuName = "LetterQuest/Grab Method")]
-    public class GrabMethod : ScriptableObject
+    public class LetterBlockGrab : MonoBehaviour
     {
         [field: SerializeField] public bool IsPointing { get; private set; }
-        [field: SerializeField] public bool IsInUse { get; private set; } = false;
+        [field: SerializeField] public bool IsInUse { get; private set; }
         [SerializeField] private MetricsContainer metrics;
         private LetterManager _letterManager;
         private float _startTime;
         private int _attempts;
 
+        private void Awake()
+        {
+            IsInUse = false;
+            _letterManager = FindFirstObjectByType<LetterManager>();
+        }
+
         private void OnDisable()
         {
             _letterManager = null;
             IsInUse = false;
-        }
-
-        public void Initialize(LetterManager letterManager)
-        {
-            _letterManager = letterManager;
         }
 
         public void Grabbing()
@@ -48,12 +48,12 @@ namespace LetterQuest.Gameplay.Letters
         public void OnReleaseLetter()
         {
             if (IsInUse == false) return;
-            
+
             IsInUse = false;
-            if (_letterManager.OnLetterReleased().OnDragEnd())
+            if (_letterManager.OnLetterReleased())
             {
-                metrics.Handler.AddGrabTime(_startTime);
-                if (_attempts == 1) metrics.Handler.IncrementCorrectGrabs();
+                metrics.Handler.AddLetterTime(_startTime);
+                if (_attempts == 1) metrics.Handler.IncrementPerfectGrabs();
                 _attempts = 0;
                 return;
             }

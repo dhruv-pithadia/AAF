@@ -17,6 +17,11 @@ namespace LetterQuest.Gameplay.Metrics.Database
             File.WriteAllText(savePath, JsonUtility.ToJson(data));
         }
 
+        public MetricsData GetFirstLoadedData()
+        {
+            return loadedData.Count == 0 ? null : loadedData[0];
+        }
+
         public int LoadAll(string folderPath, int maxLoadCount = 16)
         {
             var directoryInfo = new DirectoryInfo(folderPath);

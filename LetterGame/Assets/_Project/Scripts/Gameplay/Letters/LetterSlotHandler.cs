@@ -89,7 +89,7 @@ namespace LetterQuest.Gameplay.Letters
                 _eventBus.OnWordCompleted();
             }
 
-            metrics.Handler.AddLetterTime(_startTime);
+            metrics.Handler.AddGrabTime(_startTime);
             _startTime = Time.realtimeSinceStartup;
         }
 

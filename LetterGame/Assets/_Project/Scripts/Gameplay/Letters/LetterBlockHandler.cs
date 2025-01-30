@@ -59,10 +59,10 @@ namespace LetterQuest.Gameplay.Letters
                 _letterList[i].DisableCollision();
             }
 
-            _grabbedLetter.OnDragStart();
+            _grabbedLetter.OnGrabbed();
         }
 
-        public LetterBlock ReleaseBlock()
+        public bool ReleaseBlock()
         {
             for (var i = 0; i < _letterList.Count; i++)
             {
@@ -70,7 +70,7 @@ namespace LetterQuest.Gameplay.Letters
                 _letterList[i].EnableCollision();
             }
 
-            return _grabbedLetter;
+            return _grabbedLetter.OnReleased();
         }
 
 

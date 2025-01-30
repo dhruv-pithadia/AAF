@@ -53,7 +53,7 @@ namespace LetterQuest.Gameplay.Letters.Manager
 
         public void SetLetterArrangement(TMP_Dropdown change) => BlockHandler.UpdateBlockArrangement(change.value);
         public void OnLetterGrabbed(LetterBlock block) => BlockHandler.GrabBlock(block);
-        public LetterBlock OnLetterReleased() => BlockHandler.ReleaseBlock();
+        public bool OnLetterReleased() => BlockHandler.ReleaseBlock();
 
         #endregion
 

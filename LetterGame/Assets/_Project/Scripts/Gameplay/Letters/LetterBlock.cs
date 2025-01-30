@@ -2,8 +2,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using LetterQuest.Gameplay.Core;
-using System.Collections.Generic;
 using LetterQuest.Gameplay.Input;
 using LetterQuest.Gameplay.Animation;
 using LetterQuest.Gameplay.Letters.Ui;
@@ -12,18 +10,17 @@ namespace LetterQuest.Gameplay.Letters
 {
     public class LetterBlock : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        [SerializeField] private MeshRenderer meshRenderer;
         [SerializeField] private Canvas canvas;
+        [SerializeField] private MeshRenderer meshRenderer;
         public bool IsDragging { get; private set; }
+        private LetterBlockGrab _letterBlockGrab;
         private AnimatorHook _animatorHook;
         private Transform _letterTransform;
         private BoxCollider _boxCollider;
         private TMP_Text _letterText;
         private Vector3 _originalPos;
-        private HandDetection _holder;
-        private float _timer;
         private int _asciiCode;
-        private bool _isHeld;
+        private float _timer;
 
         #region Unity Methods
 
@@ -34,18 +31,17 @@ namespace LetterQuest.Gameplay.Letters
             _boxCollider = GetComponent<BoxCollider>();
             _animatorHook = GetComponent<AnimatorHook>();
             _letterText = GetComponentInChildren<TMP_Text>();
-        }
-
-        private void Update()
-        {
-            if (_isHeld == false) return;
-            MoveLetter(_holder.GrabPoint());
+            _letterBlockGrab = FindFirstObjectByType<LetterBlockGrab>();
         }
 
         #endregion
 
         #region Public Methods
 
+        public bool IsDetectable => _boxCollider.enabled;
+        public Vector3 GetPosition() => _letterTransform.position;
+        public void EnableCollision() => _boxCollider.enabled = true;
+        public void DisableCollision() => _boxCollider.enabled = false;
         public void MoveLetter(Vector3 position) => _letterTransform.position = position;
 
         public void OnSpawn(Vector3 position, int ascii)
@@ -56,88 +52,51 @@ namespace LetterQuest.Gameplay.Letters
             AssignLetterText(ConvertAsciiToString());
         }
 
-        public bool IsDetectable => _boxCollider.enabled;
-        public void EnableCollision() => _boxCollider.enabled = true;
-        public void DisableCollision() => _boxCollider.enabled = false;
-
         public void OnDespawn()
         {
             AssignLetterText(string.Empty);
             MoveLetter(Vector3.zero);
         }
 
-        public void OnHeldStart(HandDetection holder)
-        {
-            _holder = holder;
-            _isHeld = true;
-        }
-
-        public void OnHeldEnd()
-        {
-            _isHeld = false;
-            _holder = null;
-        }
-
-        public void OnDragStart()
+        public void OnGrabbed()
         {
             meshRenderer.enabled = false;
             _animatorHook.Play(true);
         }
 
-        public bool OnDragEnd()
+        public bool OnReleased()
         {
             _animatorHook.Play(false);
             meshRenderer.enabled = true;
-            var result = AssignLetterToUiSlot(InputDetection.GetHandOverUi(_letterTransform.position));
+            var uiSlot = InputDetection.GetUiAtPosition(_letterTransform.position, "LetterSlot");
             _letterTransform.SetPositionAndRotation(_originalPos, Quaternion.identity);
-            return result;
+            if (ReferenceEquals(uiSlot, null)) return false;
+            uiSlot.GetComponent<LetterSlotUi>().SetLetterSlotText(ConvertAsciiToString());
+            return true;
         }
 
         #endregion
 
         #region Interface Methods
 
-        public void OnPointerDown(PointerEventData eventData) => BeginLetterDrag();
-        public void OnPointerUp(PointerEventData eventData) => FinishLetterDrag(eventData);
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            IsDragging = true;
+            _letterBlockGrab.OnGrabLetter(this);
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            _letterBlockGrab.OnReleaseLetter();
+            IsDragging = false;
+        }
 
         #endregion
 
         #region Private Methods
 
-        private string ConvertAsciiToString() => ((char)_asciiCode).ToString();
         private void AssignLetterText(string text) => _letterText.text = text;
-
-        private void BeginLetterDrag()
-        {
-            IsDragging = true;
-            OnDragStart();
-        }
-
-        private void FinishLetterDrag(PointerEventData eventData)
-        {
-            IsDragging = false;
-            DoUiRaycast(eventData);
-            _animatorHook.Play(false);
-            meshRenderer.enabled = true;
-            MoveLetter(_originalPos);
-        }
-
-        private void DoUiRaycast(PointerEventData eventData)
-        {
-            AssignLetterToUiSlot(InputDetection.GetUiRaycastData(eventData));
-        }
-
-        private bool AssignLetterToUiSlot(List<RaycastResult> results)
-        {
-            for (var i = 0; i < results.Count; i++)
-            {
-                if (results[i].gameObject.layer != LayerMask.NameToLayer("LetterSlot")) continue;
-                results[i].gameObject.GetComponent<LetterSlotUi>().SetLetterSlotText(ConvertAsciiToString());
-                return true;
-            }
-
-            return false;
-        }
+        private string ConvertAsciiToString() => ((char)_asciiCode).ToString();
 
         #endregion
     }

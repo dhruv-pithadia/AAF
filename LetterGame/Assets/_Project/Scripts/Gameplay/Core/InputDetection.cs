@@ -43,30 +43,44 @@ namespace LetterQuest.Gameplay.Input
             return result;
         }
 
-        public static bool IsOverUiSlot(Vector3 position)
+        public static bool IsOverUi(Vector3 position, string layerName)
         {
-            var results = GetHandOverUi(position);
+            var results = GetUiRaycastAtPosition(position);
             if (results.Count <= 0) return false;
 
-            for (int i = 0; i < results.Count; i++)
+            for (var i = 0; i < results.Count; i++)
             {
-                if (results[i].gameObject.layer != LayerMask.NameToLayer("LetterSlot")) continue;
+                if (results[i].gameObject.layer != LayerMask.NameToLayer(layerName)) continue;
                 return true;
             }
 
             return false;
         }
 
-        public static List<RaycastResult> GetHandOverUi(Vector3 position)
+        public static GameObject GetUiAtPosition(Vector3 position, string layerName)
         {
-            var eventData = new PointerEventData(EventSystem.current)
+            var results = GetUiRaycastAtPosition(position);
+            if (results.Count <= 0) return null;
+
+            for (var i = 0; i < results.Count; i++)
+            {
+                if (results[i].gameObject.layer != LayerMask.NameToLayer(layerName)) continue;
+                return results[i].gameObject;
+            }
+
+            return null;
+        }
+
+        private static List<RaycastResult> GetUiRaycastAtPosition(Vector3 position)
+        {
+            var eventData = new PointerEventData(_eventSystem)
             {
                 position = _camera.WorldToScreenPoint(position)
             };
             return GetUiRaycastData(eventData);
         }
 
-        public static List<RaycastResult> GetUiRaycastData(PointerEventData eventData)
+        private static List<RaycastResult> GetUiRaycastData(PointerEventData eventData)
         {
             var results = new List<RaycastResult>();
             _eventSystem.RaycastAll(eventData, results);
@@ -83,7 +97,9 @@ namespace LetterQuest.Gameplay.Input
             _mousePosition = context.ReadValue<Vector2>();
         }
 
-        public void OnClick(InputAction.CallbackContext context) { }
+        public void OnClick(InputAction.CallbackContext context)
+        {
+        }
 
         #endregion
     }

@@ -17,11 +17,6 @@ namespace LetterQuest.Core.Login
         private string _folderPath;
         private string _userName;
 
-        private void OnDisable()
-        {
-            isLoggedIn = false;
-        }
-
         #region Public Methods
 
         public void Initialize()
@@ -36,10 +31,10 @@ namespace LetterQuest.Core.Login
             _stringBuilder?.Clear();
             _stringBuilder = null;
         }
-        
+
         public string GetUserName() => _userName;
         public string GetFolderPath() => _folderPath;
-        
+
         public bool CreateAccount(string username, string password)
         {
             isLoggedIn = false;
@@ -56,14 +51,14 @@ namespace LetterQuest.Core.Login
             isLoggedIn = DoesPasswordMatch(Path.Combine(_folderPath, PasswordFile), password);
             return isLoggedIn;
         }
-        
+
         public void LoginAsGuest()
         {
             isLoggedIn = true;
             if (DoesUserExist(CreateFolderPath(GuestName))) return;
             Directory.CreateDirectory(_folderPath);
         }
-        
+
         public string GetSavePath()
         {
             _stringBuilder.Clear();
