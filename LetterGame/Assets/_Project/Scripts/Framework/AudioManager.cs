@@ -10,6 +10,7 @@ namespace LetterQuest.Framework.Audio
         [SerializeField] private AudioClip[] sfxClips;
         private AudioSource _bgMusicSource;
         private AudioSource _sfxSource;
+        private bool _muteAudio;
 
         #region Unity Methods
 
@@ -20,6 +21,7 @@ namespace LetterQuest.Framework.Audio
 
         #region Public Methods
 
+        public bool IsMuted => _muteAudio;
         public void SetSfxVolume(float volume) => _sfxSource.volume = ClampVolume(volume);
         public void SetMusicVolume(float volume) => _bgMusicSource.volume = ClampVolume(volume);
 
@@ -27,6 +29,14 @@ namespace LetterQuest.Framework.Audio
         {
             if (clipIndex < 0 || clipIndex >= sfxClips.Length) return;
             _sfxSource.PlayOneShot(sfxClips[clipIndex]);
+        }
+        
+        public bool ToggleMute()
+        {
+            _muteAudio = !_muteAudio;
+            if (_muteAudio) MuteAudio();
+            else UnmuteAudio();
+            return _muteAudio;
         }
 
         #endregion
@@ -45,6 +55,18 @@ namespace LetterQuest.Framework.Audio
         {
             CleanupBgMusic();
             CleanupSfx();
+        }
+
+        private void MuteAudio()
+        {
+            _sfxSource.mute = true;
+            _bgMusicSource.mute = true;
+        }
+        
+        private void UnmuteAudio()
+        {
+            _bgMusicSource.mute = false;
+            _sfxSource.mute = false;
         }
 
         private void ConfigureAndPlayBgMusic()

@@ -50,9 +50,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 062e11bbde7c4449da2abe0af72f6553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grabMethod: {fileID: 11400000, guid: 2ac01125c8df3504c8c5965a8300471a, type: 2}
-  meshRenderer: {fileID: 6767224799148184931}
   canvas: {fileID: 3199424465202642366}
+  meshRenderer: {fileID: 6767224799148184931}
+  uiEventHandler: {fileID: 11400000, guid: 87718ae0284166648b01b59beaba3d62, type: 2}
 --- !u!114 &3021269131354186268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,8 +65,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f3ddc1383d6e6141993b177eae98469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerName: Blink
   animator: {fileID: 4445830754222628727}
+  triggerName: Blink
 --- !u!33 &8054677725272172609
 MeshFilter:
   m_ObjectHideFlags: 0

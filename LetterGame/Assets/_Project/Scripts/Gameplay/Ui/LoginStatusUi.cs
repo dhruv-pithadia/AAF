@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine;
+using UnityEngine.UI;
 using LetterQuest.Core.Login;
 using LetterQuest.Framework.Ui;
 using LetterQuest.Gameplay.Events;
@@ -8,8 +9,9 @@ namespace LetterQuest.Gameplay.Ui
 {
     public class LoginStatusUi : CanvasGroupHandler
     {
-        [SerializeField] private UserLogin userLogin;
         [SerializeField] private EventBus eventBus;
+        [SerializeField] private UserLogin userLogin;
+        [SerializeField] private Button parentalAccessBtn;
         [SerializeField] private StatusLabelUi loginStatusLabel;
         [SerializeField] private GameObject createAccountBtn;
         [SerializeField] private GameObject logoutBtn;
@@ -25,7 +27,6 @@ namespace LetterQuest.Gameplay.Ui
         {
             eventBus.LoginSuccessEvent += OnLoginEvent;
             CheckUserLogin();
-            ShowUi();
         }
 
         private void OnDisable()
@@ -64,6 +65,7 @@ namespace LetterQuest.Gameplay.Ui
 
         private void LoggedOutSetup()
         {
+            parentalAccessBtn.interactable = false;
             createAccountBtn.SetActive(true);
             logoutBtn.SetActive(false);
             loginBtn.SetActive(true);
@@ -71,6 +73,7 @@ namespace LetterQuest.Gameplay.Ui
 
         private void LoggedInSetup()
         {
+            parentalAccessBtn.interactable = true;
             createAccountBtn.SetActive(false);
             logoutBtn.SetActive(true);
             loginBtn.SetActive(false);

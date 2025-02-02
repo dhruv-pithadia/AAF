@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections;
 using Random = UnityEngine.Random;
 
-namespace LetterQuest.Framework.Utilities
+namespace LetterQuest.Framework.Misc
 {
     public class TextColorizer : MonoBehaviour
     {
@@ -54,8 +54,8 @@ namespace LetterQuest.Framework.Utilities
 
                 if (currentCharacter == 0)
                 {
-                    c0 = new Color32((byte) Random.Range(0, 255),
-                        (byte) Random.Range(0, 255), (byte) Random.Range(0, 255), 255);
+                    c0 = new Color32((byte)Random.Range(0, 255),
+                        (byte)Random.Range(0, 255), (byte)Random.Range(0, 255), 255);
                 }
 
                 var matIndex = _textInfo.characterInfo[currentCharacter].materialReferenceIndex;

@@ -54,6 +54,7 @@ MonoBehaviour:
     mode: 0
     letterPositions: {fileID: 11400000, guid: 45456b28b8f14e4409811f4d4a4dc611, type: 2}
     gameDifficulty: {fileID: 11400000, guid: a917899ca9bb98343944af4d137189fc, type: 2}
+    inputDetection: {fileID: 11400000, guid: 95bab0164cd54b941bfd09cb929e92a7, type: 2}
     wordContainer: {fileID: 11400000, guid: c1c21e6ee458b9d42bb1b49878779c86, type: 2}
 --- !u!114 &560070698095801516
 MonoBehaviour:

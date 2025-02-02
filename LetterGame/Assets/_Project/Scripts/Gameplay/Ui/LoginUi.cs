@@ -21,12 +21,7 @@ namespace LetterQuest.Gameplay.Ui
         private void Start()
         {
             HideAllUi();
-            userLogin.Initialize();
-        }
-
-        private void OnDisable()
-        {
-            userLogin.Dispose();
+            userLogin.CheckLogin();
         }
 
         public void CreateNewAccount()

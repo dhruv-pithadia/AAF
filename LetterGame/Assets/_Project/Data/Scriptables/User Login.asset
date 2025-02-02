@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 203f5eff64b249a98a1b44833fa3b201, type: 3}
   m_Name: User Login
   m_EditorClassIdentifier: 
-  isLoggedIn: 0
+  <IsLoggedIn>k__BackingField: 0
+  gameDifficulty: {fileID: 11400000, guid: a917899ca9bb98343944af4d137189fc, type: 2}
