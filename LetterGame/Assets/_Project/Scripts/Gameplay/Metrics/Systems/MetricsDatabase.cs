@@ -10,32 +10,21 @@ namespace LetterQuest.Gameplay.Metrics.Database
     {
         private readonly List<MetricsData> loadedData = new();
 
+        #region Public Methods
+
         public MetricsData[] GetData() => loadedData.ToArray();
-
-        public static void Save(string savePath, MetricsData data)
-        {
-            if (string.IsNullOrEmpty(savePath)) return;
-            //Debug.Log($"[MetricsDatabase]: Save @ {savePath}");
-            File.WriteAllText(savePath, JsonUtility.ToJson(data));
-        }
-
-        public MetricsData GetFirstLoadedData()
-        {
-            return loadedData.Count == 0 ? null : loadedData[0];
-        }
 
         public int LoadAll(string folderPath, int maxLoadCount = 16)
         {
             if (Directory.Exists(folderPath) == false) return 0;
             var directoryInfo = new DirectoryInfo(folderPath);
-            if (directoryInfo.Exists == false) return 0;
 
             var count = 0;
             var files = directoryInfo.GetFiles();
             for (var i = 0; i < files.Length; i++)
             {
                 if (count == maxLoadCount) break;
-                if (LoadMetricsFromDatabase(files[i].FullName) == false) continue;
+                if (TryLoadMetrics(files[i].FullName) == false) continue;
                 count++;
             }
 
@@ -47,17 +36,52 @@ namespace LetterQuest.Gameplay.Metrics.Database
             loadedData.Clear();
         }
 
-        private bool LoadMetricsFromDatabase(string filePath)
+        public static void Save(string savePath, MetricsData data)
         {
-            if (filePath.Contains(".json") == false || File.Exists(filePath) == false) return false;
-            return AddLoadedMetrics(JsonUtility.FromJson<MetricsData>(File.ReadAllText(filePath)));
+            if (string.IsNullOrEmpty(savePath)) return;
+            File.WriteAllText(savePath, JsonUtility.ToJson(data));
         }
+
+        public static MetricsData Load(string folder, string file)
+        {
+            var fileName = Path.Combine(folder, file);
+            return string.IsNullOrEmpty(fileName) ? null : LoadMetricsFromDatabase(fileName);
+        }
+
+        public static List<string> LoadAllNames(string folderPath)
+        {
+            var fileNames = new List<string> { "Empty" };
+            if (Directory.Exists(folderPath) == false) return fileNames;
+            var directoryInfo = new DirectoryInfo(folderPath);
+
+            var files = directoryInfo.GetFiles();
+            for (var i = 0; i < files.Length; i++)
+            {
+                fileNames.Add(files[i].Name);
+            }
+
+            return fileNames;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private bool TryLoadMetrics(string filePath) => AddLoadedMetrics(LoadMetricsFromDatabase(filePath));
 
         private bool AddLoadedMetrics(MetricsData data)
         {
-            if (loadedData.Contains(data)) return false;
+            if (ReferenceEquals(data, null) || loadedData.Contains(data)) return false;
             loadedData.Add(data);
             return true;
         }
+
+        private static MetricsData LoadMetricsFromDatabase(string filePath)
+        {
+            if (filePath.Contains(".json") == false || File.Exists(filePath) == false) return null;
+            return JsonUtility.FromJson<MetricsData>(File.ReadAllText(filePath));
+        }
+
+        #endregion
     }
 }

@@ -56,6 +56,16 @@ namespace LetterQuest.Core.Login
             return IsLoggedIn;
         }
 
+        public bool ReplacePassword(string username, string password)
+        {
+            IsLoggedIn = false;
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) return false;
+            if (DoesUserExist(CreateFolderPath(username.ToLower())) == false) return false;
+            CreatePasswordFile(password);
+            IsLoggedIn = true;
+            return IsLoggedIn;
+        }
+
         public void LoginAsGuest()
         {
             _folderPath = string.Empty;
@@ -70,12 +80,8 @@ namespace LetterQuest.Core.Login
                 ? string.Empty
                 : Path.Combine(GetSaveFolderName(), GetSaveFileName());
         }
-
-        #endregion
-
-        #region Private Methods
         
-        private string GetSaveFolderName()
+        public string GetSaveFolderName()
         {
             var saveFolder = Path.Combine(_folderPath, GetSaveFolder(gameDifficulty.Value));
             if (Directory.Exists(saveFolder) == false)
@@ -85,15 +91,19 @@ namespace LetterQuest.Core.Login
             return saveFolder;
         }
 
+        #endregion
+
+        #region Private Methods
+
         private string GetSaveFileName()
         {
             var time = DateTime.Now;
             _stringBuilder ??= new StringBuilder();
             _stringBuilder.Append(_userName);
             _stringBuilder.Append("_");
-            _stringBuilder.Append(time.ToString("yyyy-MM-dd"));
+            _stringBuilder.Append(time.ToString("M-d-yyyy"));
             _stringBuilder.Append("_");
-            _stringBuilder.Append(time.ToString("HH;mm;ss"));
+            _stringBuilder.Append(time.ToString("hh;mm;ss tt"));
             _stringBuilder.Append(Extension);
             return _stringBuilder.ToString();
         }
@@ -111,8 +121,12 @@ namespace LetterQuest.Core.Login
 
         private void CreatePasswordFile(string password)
         {
-            Directory.CreateDirectory(_folderPath);
-            File.AppendAllText(Path.Combine(_folderPath, PasswordFile), password);
+            if(Directory.Exists(_folderPath) == false)
+                Directory.CreateDirectory(_folderPath);
+
+            var passwordPath = Path.Combine(_folderPath, PasswordFile);
+            if(File.Exists(passwordPath)) File.Delete(passwordPath);
+            File.AppendAllText(passwordPath, password);
         }
 
         private string CreateFolderPath(string username)

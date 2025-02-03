@@ -2,6 +2,7 @@
 using TMPro;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 using LetterQuest.Gameplay.Ui;
 using System.Collections.Generic;
 using LetterQuest.Gameplay.Metrics.Data;
@@ -21,7 +22,11 @@ namespace LetterQuest.Gameplay.Metrics.Ui
         [SerializeField] private TMP_Text avgWordTimeText;
         [SerializeField] private TMP_Text avgGrabTimeText;
         [SerializeField] private TMP_Text avgLetterTimeText;
+        
         [SerializeField] private LineGraph lineGraph;
+        [SerializeField] private Button wordTimesBtn;
+        [SerializeField] private Button grabTimesBtn;
+        [SerializeField] private Button letterTimesBtn;
         private StringBuilder _stringBuilder = new();
 
         #region Public Methods
@@ -40,6 +45,7 @@ namespace LetterQuest.Gameplay.Metrics.Ui
             avgLetterTimeText.text = GetAverageText(Labels.LetterTimeLabel, data.TimePerLetter);
 
             CreateWordTimeGraph(data);
+            EnableButtons();
         }
 
         public void CreateGrabTimeGraph(in MetricsData data)
@@ -59,6 +65,7 @@ namespace LetterQuest.Gameplay.Metrics.Ui
 
         public void Dispose()
         {
+            DisableButtons();
             _stringBuilder.Clear();
             _stringBuilder = null;
         }
@@ -66,6 +73,20 @@ namespace LetterQuest.Gameplay.Metrics.Ui
         #endregion
 
         #region Private Methods
+
+        private void EnableButtons()
+        {
+            wordTimesBtn.interactable = true;
+            grabTimesBtn.interactable = true;
+            letterTimesBtn.interactable = true;
+        }
+        
+        private void DisableButtons()
+        {
+            wordTimesBtn.interactable = false;
+            grabTimesBtn.interactable = false;
+            letterTimesBtn.interactable = false;
+        }
 
         private string GetPlayDurationText(float playDuration)
         {

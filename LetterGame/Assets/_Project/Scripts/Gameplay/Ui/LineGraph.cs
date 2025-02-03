@@ -16,7 +16,9 @@ namespace LetterQuest.Gameplay.Ui
         [SerializeField] private TMP_Text verticalLabelText;
 
         private const float Offset = 16f;
-        private Queue<RectTransform> _dotsPool;
+        private const int MaxConnections = 64;
+        private Queue<RectTransform> _dotPool;
+        private Queue<RectTransform> _dotConnectionPool;
         private RectTransform _graphParent;
         private float _height;
         private float _width;
@@ -25,7 +27,8 @@ namespace LetterQuest.Gameplay.Ui
 
         private void Awake()
         {
-            _dotsPool = new Queue<RectTransform>();
+            _dotPool = new Queue<RectTransform>();
+            _dotConnectionPool = new Queue<RectTransform>();
             _graphParent = GetComponent<RectTransform>();
             _width = _graphParent.sizeDelta.x - Offset * 2f;
             _height = _graphParent.sizeDelta.y - Offset * 0.5f;
@@ -34,8 +37,10 @@ namespace LetterQuest.Gameplay.Ui
         private void OnDisable()
         {
             DisposeGraph();
-            _dotsPool.Clear();
-            _dotsPool = null;
+            _dotConnectionPool.Clear();
+            _dotConnectionPool = null;
+            _dotPool.Clear();
+            _dotPool = null;
         }
 
         #endregion
@@ -44,10 +49,14 @@ namespace LetterQuest.Gameplay.Ui
 
         public void CreateGraph(List<float> points, string playDuration, string label)
         {
-            var count = points.Count;
-            if (count < 2) return;
-
             ReuseDots();
+            var count = points.Count;
+            if (count < 2)
+            {
+                ReuseConnections();
+                return;
+            }
+            
             verticalLabelText.text = label;
             maxHorizontalValueText.text = playDuration;
             PlotPointsOnGraph(points, count);
@@ -59,6 +68,8 @@ namespace LetterQuest.Gameplay.Ui
 
         private void PlotPointsOnGraph(List<float> points, int count)
         {
+            if (count <= MaxConnections) ReuseConnections();
+            
             var max = int.MinValue;
             for (var i = 0; i < count; i++)
             {
@@ -73,17 +84,23 @@ namespace LetterQuest.Gameplay.Ui
             for (var i = 0; i < count; i++)
             {
                 var point = PlacePoint(new Vector2(i * xSize + Offset, points[i] / max * _height));
-                if (count > 20) continue;
+                if (count > MaxConnections) continue;
                 
                 if (ReferenceEquals(previousPoint, null) == false)
                 {
-                    CreateConnection(point.anchoredPosition, previousPoint.anchoredPosition);
+                    PlaceConnection(point.anchoredPosition, previousPoint.anchoredPosition);
                 }
 
                 previousPoint = point;
             }
         }
 
+        private void DisposeGraph()
+        {
+            ReuseConnections();
+            ReuseDots();
+        }
+        
         private RectTransform PlacePoint(Vector2 anchoredPosition)
         {
             var dot = GetDot();
@@ -94,18 +111,36 @@ namespace LetterQuest.Gameplay.Ui
             dot.anchoredPosition = anchoredPosition;
             return dot;
         }
-
-        private void DisposeGraph()
+        
+        private void PlaceConnection(Vector2 positionA, Vector2 positionB)
         {
-            ReuseDots(false);
+            var connection = GetDotConnection();
+            
+            Vector2 direction = (positionB - positionA).normalized;
+            var distance = Vector2.Distance(positionA, positionB);
+            connection.sizeDelta = new Vector2(distance, 2f);
+            connection.anchorMin = new Vector2(0f, 0f);
+            connection.anchorMax = new Vector2(0f, 0f);
+            connection.anchoredPosition = positionA + direction * distance * 0.5f;
+            var rotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            if (rotation < 0) rotation += 360f;
+            connection.localEulerAngles = new Vector3(0, 0, rotation);
+            connection.gameObject.SetActive(true);
         }
 
         private RectTransform GetDot()
         {
-            return _dotsPool.Count == 0 ? Instantiate(dotPrefab, dotParent) : _dotsPool.Dequeue();
+            return _dotPool.Count == 0 ? Instantiate(dotPrefab, dotParent) : _dotPool.Dequeue();
         }
 
-        private void ReuseDots(bool reuse = true)
+        private RectTransform GetDotConnection()
+        {
+            return _dotConnectionPool.Count == 0
+                ? Instantiate(connectionPrefab, connectionParent)
+                : _dotConnectionPool.Dequeue();
+        }
+
+        private void ReuseDots()
         {
             maxVerticalValueText.text = "N/A";
             maxHorizontalValueText.text = "N/A";
@@ -113,32 +148,36 @@ namespace LetterQuest.Gameplay.Ui
             for (var i = 0; i < graphChildren.Length; i++)
             {
                 if (ReferenceEquals(graphChildren[i], dotParent)) continue;
-                ReturnDot(graphChildren[i], reuse);
+                ReturnDot(graphChildren[i]);
             }
         }
 
-        private void ReturnDot(RectTransform dot, bool reuse)
+        public void ReuseConnections()
+        {
+            var graphChildren = connectionParent.GetComponentsInChildren<RectTransform>();
+            for (var i = 0; i < graphChildren.Length; i++)
+            {
+                if (ReferenceEquals(graphChildren[i], connectionParent)) continue;
+                ReturnDotConnection(graphChildren[i]);
+            }
+        }
+
+        private void ReturnDot(RectTransform dot)
         {
             dot.gameObject.SetActive(false);
-            if (reuse == false || _dotsPool.Count > 100) return;
-            if (_dotsPool.Contains(dot)) return;
-            _dotsPool.Enqueue(dot);
+            if (_dotPool.Count > 100) return;
+            if (_dotPool.Contains(dot)) return;
+            _dotPool.Enqueue(dot);
         }
 
-        private void CreateConnection(Vector2 positionA, Vector2 positionB)
+        private void ReturnDotConnection(RectTransform connection)
         {
-            var result = Instantiate(connectionPrefab, connectionParent);
-            Vector2 direction = (positionB - positionA).normalized;
-            var distance = Vector2.Distance(positionA, positionB);
-            result.sizeDelta = new Vector2(distance, 2f);
-            result.anchorMin = new Vector2(0f, 0f);
-            result.anchorMax = new Vector2(0f, 0f);
-            result.anchoredPosition = positionA + direction * distance * 0.5f;
-            var rotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            if (rotation < 0) rotation += 360f;
-            result.localEulerAngles = new Vector3(0, 0, rotation);
+            connection.gameObject.SetActive(false);
+            if (_dotConnectionPool.Count > 100) return;
+            if (_dotConnectionPool.Contains(connection)) return;
+            _dotConnectionPool.Enqueue(connection);
         }
-
+        
         #endregion
     }
 }

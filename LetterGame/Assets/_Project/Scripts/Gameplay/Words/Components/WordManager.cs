@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine;
+using LetterQuest.Core;
 using LetterQuest.Core.Login;
 using LetterQuest.Gameplay.Events;
 using LetterQuest.Framework.Scenes;
@@ -24,6 +25,7 @@ namespace LetterQuest.Gameplay.Words.Manager
         private WordsProgressBar _wordsProgressBar;
         private WordGenerator _wordGenerator;
         private const float Timer = 3f;
+        private DevMode _devMode;
         private float _startTime;
         private float _breakTime;
         private bool _allowSkip;
@@ -32,6 +34,7 @@ namespace LetterQuest.Gameplay.Words.Manager
 
         public void Start()
         {
+            _devMode = FindFirstObjectByType<DevMode>();
             _wordsProgressBar = FindFirstObjectByType<WordsProgressBar>();
             _wordGenerator = new WordGenerator(gameDifficulty.Value);
             eventBus.WordCompleteEvent += OnWordComplete;
@@ -97,6 +100,7 @@ namespace LetterQuest.Gameplay.Words.Manager
         {
             if (_wordsProgressBar.GetProgress() >= 1f)
             {
+                _devMode.SavePositionData();
                 wordContainer.SetWord(GameOverText, true);
                 Invoke(nameof(GameOver), Timer);
                 return;

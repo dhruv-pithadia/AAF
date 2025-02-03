@@ -1,6 +1,7 @@
 ﻿
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using LetterQuest.Core.Login;
 using LetterQuest.Framework.Ui;
 using LetterQuest.Gameplay.Events;
@@ -9,14 +10,14 @@ namespace LetterQuest.Gameplay.Ui
 {
     public class LoginUi : CanvasGroupHandler
     {
-        [SerializeField] private UserLogin userLogin;
+        [SerializeField] private Button enterBtn;
         [SerializeField] private EventBus eventBus;
-        [SerializeField] private TMP_InputField usernameInputField;
-        [SerializeField] private TMP_InputField passwordInputField;
-        [SerializeField] private TMP_Text errorText;
-        [SerializeField] private GameObject loginBtn;
-        [SerializeField] private GameObject createAccountBtn;
+        [SerializeField] private UserLogin userLogin;
         [SerializeField] private GameObject forgotPasswordBtn;
+        [SerializeField] private TMP_InputField passwordCopyInput;
+        [SerializeField] private TMP_InputField passwordInput;
+        [SerializeField] private TMP_InputField usernameInput;
+        [SerializeField] private TMP_Text errorText;
 
         private void Start()
         {
@@ -26,7 +27,29 @@ namespace LetterQuest.Gameplay.Ui
 
         public void CreateNewAccount()
         {
-            if (userLogin.CreateAccount(usernameInputField.text, passwordInputField.text))
+            var user = usernameInput.text;
+            var password = passwordInput.text;
+            var pwCopy = passwordCopyInput.text;
+
+            if (string.IsNullOrEmpty(user))
+            {
+                SetErrorText("Username is empty");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(pwCopy))
+            {
+                SetErrorText("Password is empty");
+                return;
+            }
+
+            if (string.Equals(password, pwCopy) == false)
+            {
+                SetErrorText("Passwords do not match");
+                return;
+            }
+
+            if (userLogin.CreateAccount(user, password))
             {
                 eventBus.OnLoginSuccess();
                 HideAllUi();
@@ -38,7 +61,22 @@ namespace LetterQuest.Gameplay.Ui
 
         public void Login()
         {
-            if (userLogin.Login(usernameInputField.text, passwordInputField.text))
+            var user = usernameInput.text;
+            var password = passwordInput.text;
+
+            if (string.IsNullOrEmpty(user))
+            {
+                SetErrorText("Username is empty");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(password))
+            {
+                SetErrorText("Password is empty");
+                return;
+            }
+
+            if (userLogin.Login(user, password))
             {
                 eventBus.OnLoginSuccess();
                 HideAllUi();
@@ -48,6 +86,40 @@ namespace LetterQuest.Gameplay.Ui
             SetErrorText("Invalid username or password");
         }
 
+        public void ForgotPassword()
+        {
+            var user = usernameInput.text;
+            var password = passwordInput.text;
+            var pwCopy = passwordCopyInput.text;
+
+            if (string.IsNullOrEmpty(user))
+            {
+                SetErrorText("Username is empty");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(pwCopy))
+            {
+                SetErrorText("Password is empty");
+                return;
+            }
+
+            if (string.Equals(password, pwCopy) == false)
+            {
+                SetErrorText("Passwords do not match");
+                return;
+            }
+
+            if (userLogin.ReplacePassword(user, password))
+            {
+                eventBus.OnLoginSuccess();
+                HideAllUi();
+                return;
+            }
+
+            SetErrorText("Username does not exist");
+        }
+
         public void Logout()
         {
             userLogin.LoginAsGuest();
@@ -55,26 +127,57 @@ namespace LetterQuest.Gameplay.Ui
 
         public void ShowLoginUi()
         {
-            ShowUi();
-            loginBtn.SetActive(true);
-            createAccountBtn.SetActive(false);
+            ShowAndClearUi();
             forgotPasswordBtn.SetActive(true);
+            usernameInput.gameObject.SetActive(true);
+            passwordInput.gameObject.SetActive(true);
+            passwordCopyInput.gameObject.SetActive(false);
+            enterBtn.onClick.RemoveAllListeners();
+            enterBtn.onClick.AddListener(Login);
+            SetErrorText("Login");
         }
 
         public void ShowAccountUi()
         {
-            ShowUi();
-            loginBtn.SetActive(false);
-            createAccountBtn.SetActive(true);
+            ShowAndClearUi();
             forgotPasswordBtn.SetActive(false);
+            usernameInput.gameObject.SetActive(true);
+            passwordInput.gameObject.SetActive(true);
+            passwordCopyInput.gameObject.SetActive(true);
+            enterBtn.onClick.RemoveAllListeners();
+            enterBtn.onClick.AddListener(CreateNewAccount);
+            SetErrorText("Create Account");
+        }
+
+        public void ShowForgotPasswordUi()
+        {
+            ShowAndClearUi();
+            forgotPasswordBtn.SetActive(false);
+            usernameInput.gameObject.SetActive(true);
+            passwordInput.gameObject.SetActive(true);
+            passwordCopyInput.gameObject.SetActive(true);
+            enterBtn.onClick.RemoveAllListeners();
+            enterBtn.onClick.AddListener(ForgotPassword);
+            SetErrorText("Forgot Password");
         }
 
         public void HideAllUi()
         {
             SetErrorText(string.Empty);
-            usernameInputField.text = string.Empty;
-            passwordInputField.text = string.Empty;
+            ResetInputFields();
             HideUi();
+        }
+
+        private void ShowAndClearUi()
+        {
+            ShowUi();
+            ResetInputFields();
+        }
+
+        private void ResetInputFields()
+        {
+            usernameInput.text = string.Empty;
+            passwordInput.text = string.Empty;
         }
 
         private void SetErrorText(string text)

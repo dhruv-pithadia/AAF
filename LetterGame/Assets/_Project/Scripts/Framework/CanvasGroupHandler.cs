@@ -25,14 +25,14 @@ namespace LetterQuest.Framework.Ui
             }
         }
 
-        protected void HideUi()
+        public void HideUi()
         {
             _canvasGroup.alpha = 0f;
             _canvasGroup.blocksRaycasts = false;
             _canvasGroup.interactable = false;
         }
 
-        protected void ShowUi()
+        public void ShowUi()
         {
             _canvasGroup.alpha = 1f;
             _canvasGroup.blocksRaycasts = true;

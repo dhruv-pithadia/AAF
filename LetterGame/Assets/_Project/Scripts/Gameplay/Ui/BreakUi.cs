@@ -12,7 +12,7 @@ namespace LetterQuest.Gameplay.Ui
         [SerializeField] private EventBus eventBus;
         [SerializeField] private BreakAlerts breakAlerts;
         [SerializeField] private TMP_Text breakText;
-        
+
         private void Start()
         {
             breakAlerts.Initialize(breakText);
@@ -29,9 +29,9 @@ namespace LetterQuest.Gameplay.Ui
             DisposeInvoke();
         }
 
-        public void Pause()
+        public void Pause(bool showUi)
         {
-            ShowUi();
+            if (showUi) ShowUi();
             DisposeInvoke();
             HideBreakAlert();
             eventBus.OnBreak(true);

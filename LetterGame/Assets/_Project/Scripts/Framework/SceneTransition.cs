@@ -12,7 +12,7 @@ namespace LetterQuest.Framework.Scenes
         {
             if (IsInvoking()) return;
             if (string.IsNullOrEmpty(sceneToLoad) == false) ValidateScenePath();
-            else Invoke(nameof(Quit), 3f);
+            else Invoke(nameof(Quit), 4f);
         }
 
         private void ValidateScenePath()

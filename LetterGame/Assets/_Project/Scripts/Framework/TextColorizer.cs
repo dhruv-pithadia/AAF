@@ -8,6 +8,7 @@ namespace LetterQuest.Framework.Misc
 {
     public class TextColorizer : MonoBehaviour
     {
+        [SerializeField] private float colorizerSpeed = 0.05f;
         private TMP_Text _tmpText;
         private TMP_TextInfo _textInfo;
         private Coroutine _coroutine;
@@ -21,7 +22,7 @@ namespace LetterQuest.Framework.Misc
             _tmpText.ForceMeshUpdate();
             _textInfo = _tmpText.textInfo;
             _twoSecWait = new WaitForSeconds(2f);
-            _characterWait = new WaitForSeconds(0.05f);
+            _characterWait = new WaitForSeconds(colorizerSpeed);
         }
 
         private void OnEnable()

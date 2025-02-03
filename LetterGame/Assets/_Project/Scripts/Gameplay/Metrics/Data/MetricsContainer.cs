@@ -32,6 +32,12 @@ namespace LetterQuest.Gameplay.Metrics
             Data.SetData(data);
         }
 
+        public void ClearData()
+        {
+            HasData = false;
+            Data.Clear();
+        }
+
         public void StartLevel()
         {
             Data.Clear();
