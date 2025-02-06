@@ -39,7 +39,7 @@ namespace LetterQuest.Gameplay.Metrics.Database
         public static void Save(string savePath, MetricsData data)
         {
             if (string.IsNullOrEmpty(savePath)) return;
-            File.WriteAllText(savePath, JsonUtility.ToJson(data));
+            File.WriteAllText(savePath, JsonUtility.ToJson(data, true));
         }
 
         public static MetricsData Load(string folder, string file)

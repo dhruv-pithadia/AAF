@@ -25,6 +25,11 @@ namespace LetterQuest.Gameplay.Core
             _blockGrab = FindFirstObjectByType<LetterBlockGrab>();
         }
 
+        private void OnDisable()
+        {
+            ReleaseLetter();
+        }
+
         private void OnDestroy()
         {
             uiEventHandler.Dispose();
@@ -42,6 +47,7 @@ namespace LetterQuest.Gameplay.Core
 
         private void OnTriggerEnter(Collider other)
         {
+            if (_blockGrab.IsInUse || other.CompareTag("Letter") == false) return;
             _timer = 1f;
         }
 
